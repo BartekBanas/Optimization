@@ -1,0 +1,14 @@
+﻿  main.cpp
+J:\Programming\C++\Optymalizacja\main\main.cpp(183,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+J:\Programming\C++\Optymalizacja\main\main.cpp(263,47): warning C4018: '>=': signed/unsigned mismatch
+J:\Programming\C++\Optymalizacja\main\main.cpp(310,14): warning C4018: '>': signed/unsigned mismatch
+  matrix.cpp
+  ode_solver.cpp
+  opt_alg.cpp
+  solution.cpp
+  user_funs.cpp
+  Generating Code...
+main.obj : error LNK2019: unresolved external symbol "double * __cdecl expansionV2(double (__cdecl*)(double),double,double,double,double)" (?expansionV2@@YAPEANP6ANN@ZNNNN@Z) referenced in function "void __cdecl lab1(void)" (?lab1@@YAXXZ)
+    Hint on symbols that are defined and could potentially match:
+      "double * __cdecl expansionV2(double (__cdecl*)(double),double,double,double,unsigned int)" (?expansionV2@@YAPEANP6ANN@ZNNNI@Z)
+J:\Programming\C++\Optymalizacja\main\x64\Debug\Optimization labs.exe : fatal error LNK1120: 1 unresolved externals
