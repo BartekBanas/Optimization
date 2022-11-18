@@ -9,6 +9,9 @@ using namespace std;
 double Fibonacci(double function(double), double a, double b, double precision);
 double Function1(double x);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
+double Trying(double x, double step, double function(double));
+
+int n = 2;
 
 void lab1();
 void lab2();
@@ -78,7 +81,11 @@ double Function1(double x)
 {
     return -cos(0.1 * x) * exp(-pow(0.1 * x - 2 * M_PI, 2)) +
         0.002 * pow(0.1 * x, 2);
+}
 
+double Function2(double x1, double x2)
+{
+    return x1*x1 + x2*x2 - cos(2.5*M_PI*x1) - cos(2.5*M_PI*x2) + 2;
 }
 
 double Fibonacci(double function(double), double a, double b, double precision)
@@ -179,4 +186,38 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
     } //while (b - a < eps || abs(d - d0) < gamma);
     while (b - a >= eps && abs(d - d0) >= gamma);
     return d;
+}
+
+double HookeJeeves(double function(double, double), vector<double>x, double step, double alfa, double epsilon, int nMax)
+{
+    vector<double> xB = x;
+    vector<double> xBunderscore;
+    x = Trying(xB, step, function);
+    while (function(x[0], x[1]) < function(xB[0], xB[1]))
+    {
+        xBunderscore = xB;
+        xB = x;
+        x = 2 * xB - xB;
+        x = Trying(xB, step);
+    }   x = xB;
+}
+
+vector<double> Trying(vector<double> x, double step, double function(double))
+{
+    for (int i = 1; i <= n; ++i)
+    {
+        if(function(x + step * exp(i)) < function(x))
+        {
+            x = x + step * exp(i);
+        }
+        else
+        {
+            if(function(x - step * exp(i)) < function(x))
+            {
+                x = x - step * exp(i);
+            }
+        }
+    }
+
+    return x;
 }

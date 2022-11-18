@@ -133,6 +133,7 @@
     <ClCompile Include="..\opt_alg.cpp" />
     <ClCompile Include="..\solution.cpp" />
     <ClCompile Include="..\user_funs.cpp" />
+    <ClCompile Include="VectorUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\matrix.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="..\opt_alg.h" />
     <ClInclude Include="..\solution.h" />
     <ClInclude Include="..\user_funs.h" />
+    <ClInclude Include="VectorUtilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
