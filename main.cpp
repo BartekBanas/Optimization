@@ -1,7 +1,7 @@
 #include "opt_alg.h"
 #include <iostream>
 #include <cmath>
-#include "Optimization labs/VectorUtilities.h"
+#include "VectorUtilities.h"
 
 using namespace std;
 
@@ -10,8 +10,39 @@ using namespace std;
 double Fibonacci(double function(double), double a, double b, double precision);
 double Function1(double x);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
-vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon, int nMax);
+vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon,
+                           int nMax);
 vector<double> Trying(vector<double> x, double step, double function(vector<double>));
+
+static std::vector<double> AddVectors(std::vector<double> vector1, std::vector<double> vector2)
+{
+    vector1[0] += vector2[0];
+    vector1[1] += vector2[1];
+    //vector1.insert( vector1.end(), vector2.begin(), vector2.end() );
+
+    return vector1;
+}
+
+static std::vector<double> AddToVector(std::vector<double> vector, double number)
+{
+    return std::vector<double>{vector[0] + number, vector[1] + number};
+}
+
+static std::vector<double> SubtractVectors(std::vector<double> vector1, std::vector<double> vector2)
+{
+    return std::vector<double>{vector1[0] - vector2[0], vector1[1] - vector2[1]};
+}
+
+static std::vector<double> MultiplyVector(std::vector<double> vector, double multiplier)
+{
+    return std::vector<double>{vector[0] * multiplier, vector[1] * multiplier};
+}
+
+static void PrintVector(std::vector<double> vector)
+{
+    cout << "Vector {" << vector[0] << ", " << vector[1] << "}" << endl;
+}
+
 
 int n = 2;
 int fcalls = 0;
@@ -33,7 +64,7 @@ int main()
     {
         cerr << "ERROR:\n";
         cerr << EX_INFO << endl
-             << endl;
+            << endl;
     }
 
     return 0;
@@ -79,7 +110,7 @@ void lab6()
 double Function1(double x)
 {
     return -cos(0.1 * x) * exp(-pow(0.1 * x - 2 * M_PI, 2)) +
-           0.002 * pow(0.1 * x, 2);
+        0.002 * pow(0.1 * x, 2);
 }
 
 double Function2(vector<double> x)
@@ -89,9 +120,23 @@ double Function2(vector<double> x)
 
 double Fibonacci(double function(double), double a, double b, double precision)
 {
-    double *fibonacci = new double[100]{0, 1};
+    double* fibonacci = new double[100]{0, 1};
 
-    
+    vector<double> x1;
+    x1.push_back(5);
+    x1.push_back(5);
+
+    vector<double> x2;
+    x2.push_back(6.0);
+    x2.push_back(2);
+    PrintVector(x1);
+    PrintVector(x2);
+
+    //VectorUtilities vektorek;
+    //vector<double> x3 = vektorek.AddVectors(x1, x2);
+
+    vector<double> x3 = VectorUtilities::AddVectors(x1, x2);
+    PrintVector(x3);
 
     int k = 1;
 
@@ -101,10 +146,10 @@ double Fibonacci(double function(double), double a, double b, double precision)
         k++;
     }
 
-    double *As = new double[k];
-    double *bs = new double[k];
-    double *cs = new double[k];
-    double *ds = new double[k];
+    double* As = new double[k];
+    double* bs = new double[k];
+    double* cs = new double[k];
+    double* ds = new double[k];
 
     As[0] = a;
     bs[0] = b;
@@ -146,7 +191,6 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
     double d0, d = 2;
     do
     {
-
         d0 = d;
         fcalls++;
         l = Function1(a) * (b * b - c * c) + Function1(b) * (c * c - a * a) + Function1(c) * (a * a - b * b);
@@ -191,7 +235,6 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
         i++;
         if (fcalls > Nmax)
             return 40422;
-
     } // while (b - a < eps || abs(d - d0) < gamma);
     while (b - a >= eps && abs(d - d0) >= gamma);
     return d;
