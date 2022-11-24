@@ -7,6 +7,7 @@ using namespace std;
 
 #define M_PI 3.14159265358979323846
 
+double Function2(vector<double> x);
 double Fibonacci(double function(double), double a, double b, double precision);
 double Function1(double x);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
@@ -28,7 +29,8 @@ int main()
 {
     try
     {
-        lab1();
+        //lab1();
+        lab2();
     }
     catch (string EX_INFO)
     {
@@ -59,6 +61,14 @@ void lab1()
 
 void lab2()
 {
+    double step = 0.5;
+    vector<double> x = {1, 0.5};
+    PrintVector(x);
+    double alfa = 0.5;
+    double epsilon = 1e-3;
+    int Nmax = 1000;
+
+    PrintVector(HookeJeeves(Function2, x, step, alfa, epsilon, Nmax));
 }
 
 void lab3()
@@ -92,9 +102,8 @@ double Fibonacci(double function(double), double a, double b, double precision)
 {
     double* fibonacci = new double[100]{0, 1};
 
-    vector<double> x1;
-    x1.push_back(5);
-    x1.push_back(5);
+    vector<double> x1(5, 5);
+    
 
     vector<double> x2;
     x2.push_back(6.0);
@@ -215,7 +224,7 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
     vector<double> error;
     error.push_back(0.00002137);
     vector<double> xB;
-    vector<double> xBunderscore;
+    vector<double> xB_;
     do
     {
         xB = x;
@@ -224,9 +233,9 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
         {
             do
             {
-                xBunderscore = xB;
+                xB_ = xB;
                 xB = x;
-                x = SubtractVectors(MultiplyVector(xB, 2), xBunderscore);
+                x = SubtractVectors(MultiplyVector(xB, 2), xB_);
                 x = Trying(xB, step, function);
                 if (fcalls > nMax)
                 {
@@ -251,14 +260,24 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
 {
     // = {(1, 0), (0, 1), (-1, 0), (0, -1)}
     vector<double> eJ[4];
-    eJ[0].push_back((1, 0));
-    eJ[1].push_back((0, 1));
-    eJ[2].push_back((-1, 0));
-    eJ[3].push_back((0, -1));
+    eJ[0].push_back(1);
+    eJ[0].push_back(0);
+    eJ[1].push_back(0);
+    eJ[1].push_back(1);
+    eJ[2].push_back(-1);
+    eJ[2].push_back(0);
+    eJ[3].push_back(0);
+    eJ[3].push_back(1);
+
+    vector<double> v1;
+    vector<double> v2;
 
     for (int i = 1; i <= n; ++i)
     {
-        if (function(AddVectors(x, MultiplyVector(eJ[i], step))) < function(x))
+        v1 = MultiplyVector(eJ[i], step);
+        v2 = AddVectors(x, v1);
+        
+        if (function(v2) < function(x))
         {
             x = AddVectors(x, MultiplyVector(eJ[i], step));
         }
