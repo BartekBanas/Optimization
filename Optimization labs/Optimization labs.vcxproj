@@ -213,7 +213,7 @@
     <ClInclude Include="..\opt_alg.h" />
     <ClInclude Include="..\solution.h" />
     <ClInclude Include="..\user_funs.h" />
-    <ClInclude Include="VectorUtilities.h" />
+    <ClInclude Include="..\VectorUtilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
