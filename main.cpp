@@ -91,6 +91,8 @@ double Fibonacci(double function(double), double a, double b, double precision)
 {
     double *fibonacci = new double[100]{0, 1};
 
+    
+
     int k = 1;
 
     while (fibonacci[k] <= (b - a) / precision)
@@ -195,66 +197,66 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
     return d;
 }
 
-vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon, int nMax)
-{
-    vector<double> error;
-    error.push_back(0.00002137);
-    vector<double> xB;
-    vector<double> xBunderscore;
-    do
-    {
-        xB = x;
-        x = Trying(xB, step, function);
-        if (function(x) < function(xB))
-        {
-            do
-            {
-                xBunderscore = xB;
-                xB = x;
-                x = VectorUtilities::SubtractVectors(VectorUtilities::MultiplyVector(xB, 2), xBunderscore);
-                x = Trying(xB, step, function);
-                if (fcalls > nMax)
-                {
-                    return error;
-                }
-            } while (function(x) > function(xB));
-            x = xB;
-        }
-        else
-        {
-            step = alfa * step;
-        }
-        if (fcalls > nMax)
-        {
-            return error;
-        }
-    } while (step < epsilon);
-    return xB;
-}
-
-vector<double> Trying(vector<double> x, double step, double function(vector<double>))
-{
-    // = {(1, 0), (0, 1), (-1, 0), (0, -1)}
-    vector<double> eJ[4];
-    eJ[0].push_back((1, 0));
-    eJ[1].push_back((0, 1));
-    eJ[2].push_back((-1, 0));
-    eJ[3].push_back((0, -1));
-
-    for (int i = 1; i <= n; ++i)
-    {
-        if (function(VectorUtilities::AddVectors(x, VectorUtilities::MultiplyVector(eJ[i], step))) < function(x))
-        {
-            x = VectorUtilities::AddVectors(x, VectorUtilities::MultiplyVector(eJ[i], step));
-        }
-        else
-        {
-            if (function(VectorUtilities::SubtractVectors(x, VectorUtilities::MultiplyVector(eJ[i], step))) < function(x))
-            {
-                x = VectorUtilities::SubtractVectors(x, VectorUtilities::MultiplyVector(eJ[i], step));
-            }
-        }
-    }
-
-    return x;
-}
+// vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon, int nMax)
+// {
+//     vector<double> error;
+//     error.push_back(0.00002137);
+//     vector<double> xB;
+//     vector<double> xBunderscore;
+//     do
+//     {
+//         xB = x;
+//         x = Trying(xB, step, function);
+//         if (function(x) < function(xB))
+//         {
+//             do
+//             {
+//                 xBunderscore = xB;
+//                 xB = x;
+//                 x = VectorUtilities::SubtractVectors(VectorUtilities::MultiplyVector(xB, 2), xBunderscore);
+//                 x = Trying(xB, step, function);
+//                 if (fcalls > nMax)
+//                 {
+//                     return error;
+//                 }
+//             } while (function(x) > function(xB));
+//             x = xB;
+//         }
+//         else
+//         {
+//             step = alfa * step;
+//         }
+//         if (fcalls > nMax)
+//         {
+//             return error;
+//         }
+//     } while (step < epsilon);
+//     return xB;
+// }
+//
+// vector<double> Trying(vector<double> x, double step, double function(vector<double>))
+// {
+//     // = {(1, 0), (0, 1), (-1, 0), (0, -1)}
+//     vector<double> eJ[4];
+//     eJ[0].push_back((1, 0));
+//     eJ[1].push_back((0, 1));
+//     eJ[2].push_back((-1, 0));
+//     eJ[3].push_back((0, -1));
+//
+//     for (int i = 1; i <= n; ++i)
+//     {
+//         if (function(VectorUtilities::AddVectors(x, VectorUtilities::MultiplyVector(eJ[i], step))) < function(x))
+//         {
+//             x = VectorUtilities::AddVectors(x, VectorUtilities::MultiplyVector(eJ[i], step));
+//         }
+//         else
+//         {
+//             if (function(VectorUtilities::SubtractVectors(x, VectorUtilities::MultiplyVector(eJ[i], step))) < function(x))
+//             {
+//                 x = VectorUtilities::SubtractVectors(x, VectorUtilities::MultiplyVector(eJ[i], step));
+//             }
+//         }
+//     }
+//
+//     return x;
+// }
