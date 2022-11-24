@@ -14,36 +14,6 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
                            int nMax);
 vector<double> Trying(vector<double> x, double step, double function(vector<double>));
 
-static std::vector<double> AddVectors(std::vector<double> vector1, std::vector<double> vector2)
-{
-    vector1[0] += vector2[0];
-    vector1[1] += vector2[1];
-    //vector1.insert( vector1.end(), vector2.begin(), vector2.end() );
-
-    return vector1;
-}
-
-static std::vector<double> AddToVector(std::vector<double> vector, double number)
-{
-    return std::vector<double>{vector[0] + number, vector[1] + number};
-}
-
-static std::vector<double> SubtractVectors(std::vector<double> vector1, std::vector<double> vector2)
-{
-    return std::vector<double>{vector1[0] - vector2[0], vector1[1] - vector2[1]};
-}
-
-static std::vector<double> MultiplyVector(std::vector<double> vector, double multiplier)
-{
-    return std::vector<double>{vector[0] * multiplier, vector[1] * multiplier};
-}
-
-static void PrintVector(std::vector<double> vector)
-{
-    cout << "Vector {" << vector[0] << ", " << vector[1] << "}" << endl;
-}
-
-
 int n = 2;
 int fcalls = 0;
 
@@ -131,11 +101,11 @@ double Fibonacci(double function(double), double a, double b, double precision)
     x2.push_back(2);
     PrintVector(x1);
     PrintVector(x2);
-
-    //VectorUtilities vektorek;
+    
     //vector<double> x3 = vektorek.AddVectors(x1, x2);
 
-    vector<double> x3 = VectorUtilities::AddVectors(x1, x2);
+    
+    vector<double> x3 = AddVectors(x1, x2);
     PrintVector(x3);
 
     int k = 1;
@@ -240,66 +210,66 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
     return d;
 }
 
-// vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon, int nMax)
-// {
-//     vector<double> error;
-//     error.push_back(0.00002137);
-//     vector<double> xB;
-//     vector<double> xBunderscore;
-//     do
-//     {
-//         xB = x;
-//         x = Trying(xB, step, function);
-//         if (function(x) < function(xB))
-//         {
-//             do
-//             {
-//                 xBunderscore = xB;
-//                 xB = x;
-//                 x = VectorUtilities::SubtractVectors(VectorUtilities::MultiplyVector(xB, 2), xBunderscore);
-//                 x = Trying(xB, step, function);
-//                 if (fcalls > nMax)
-//                 {
-//                     return error;
-//                 }
-//             } while (function(x) > function(xB));
-//             x = xB;
-//         }
-//         else
-//         {
-//             step = alfa * step;
-//         }
-//         if (fcalls > nMax)
-//         {
-//             return error;
-//         }
-//     } while (step < epsilon);
-//     return xB;
-// }
-//
-// vector<double> Trying(vector<double> x, double step, double function(vector<double>))
-// {
-//     // = {(1, 0), (0, 1), (-1, 0), (0, -1)}
-//     vector<double> eJ[4];
-//     eJ[0].push_back((1, 0));
-//     eJ[1].push_back((0, 1));
-//     eJ[2].push_back((-1, 0));
-//     eJ[3].push_back((0, -1));
-//
-//     for (int i = 1; i <= n; ++i)
-//     {
-//         if (function(VectorUtilities::AddVectors(x, VectorUtilities::MultiplyVector(eJ[i], step))) < function(x))
-//         {
-//             x = VectorUtilities::AddVectors(x, VectorUtilities::MultiplyVector(eJ[i], step));
-//         }
-//         else
-//         {
-//             if (function(VectorUtilities::SubtractVectors(x, VectorUtilities::MultiplyVector(eJ[i], step))) < function(x))
-//             {
-//                 x = VectorUtilities::SubtractVectors(x, VectorUtilities::MultiplyVector(eJ[i], step));
-//             }
-//         }
-//     }
-//
-//     return x;
-// }
+vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon, int nMax)
+{
+    vector<double> error;
+    error.push_back(0.00002137);
+    vector<double> xB;
+    vector<double> xBunderscore;
+    do
+    {
+        xB = x;
+        x = Trying(xB, step, function);
+        if (function(x) < function(xB))
+        {
+            do
+            {
+                xBunderscore = xB;
+                xB = x;
+                x = SubtractVectors(MultiplyVector(xB, 2), xBunderscore);
+                x = Trying(xB, step, function);
+                if (fcalls > nMax)
+                {
+                    return error;
+                }
+            } while (function(x) > function(xB));
+            x = xB;
+        }
+        else
+        {
+            step = alfa * step;
+        }
+        if (fcalls > nMax)
+        {
+            return error;
+        }
+    } while (step < epsilon);
+    return xB;
+}
+
+vector<double> Trying(vector<double> x, double step, double function(vector<double>))
+{
+    // = {(1, 0), (0, 1), (-1, 0), (0, -1)}
+    vector<double> eJ[4];
+    eJ[0].push_back((1, 0));
+    eJ[1].push_back((0, 1));
+    eJ[2].push_back((-1, 0));
+    eJ[3].push_back((0, -1));
+
+    for (int i = 1; i <= n; ++i)
+    {
+        if (function(AddVectors(x, MultiplyVector(eJ[i], step))) < function(x))
+        {
+            x = AddVectors(x, MultiplyVector(eJ[i], step));
+        }
+        else
+        {
+            if (function(SubtractVectors(x, MultiplyVector(eJ[i], step))) < function(x))
+            {
+                x = SubtractVectors(x, MultiplyVector(eJ[i], step));
+            }
+        }
+    }
+
+    return x;
+}

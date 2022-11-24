@@ -1,6 +1,9 @@
 ﻿#include "VectorUtilities.h"
 
+#include <iostream>
 #include <vector>
+
+using namespace std;
 
 std::vector<double> AddVectors(std::vector<double> vector1, std::vector<double> vector2)
 {
@@ -10,17 +13,31 @@ std::vector<double> AddVectors(std::vector<double> vector1, std::vector<double> 
     return vector1;
 }
 
-static std::vector<double> AddToVector(std::vector<double> vector, double number)
+std::vector<double> AddToVector(std::vector<double> vector, double number)
 {
-    return std::vector<double>{vector[0] + number, vector[1] + number};
+    vector[0] += number;
+    vector[1] += number;
+
+    return vector;
 }
 
-static std::vector<double> SubtractVectors(std::vector<double> vector1, std::vector<double> vector2)
+std::vector<double> SubtractVectors(std::vector<double> vector1, std::vector<double> vector2)
 {
-    return std::vector<double>{vector1[0] - vector2[0], vector1[1] - vector2[1]};
+    vector1[0] -= vector2[0];
+    vector1[1] -= vector2[1];
+
+    return vector1;
 }
 
-static std::vector<double> MultiplyVector(std::vector<double> vector, double multiplier)
+std::vector<double> MultiplyVector(std::vector<double> vector, double multiplier)
 {
-    return std::vector<double>{vector[0] * multiplier, vector[1] * multiplier};
+    vector[0] *= multiplier;
+    vector[1] *= multiplier;
+
+    return vector;
+}
+
+void PrintVector(std::vector<double> vector)
+{
+    std::cout << "Vector {" << vector[0] << ", " << vector[1] << "}" << endl;
 }
