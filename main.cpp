@@ -95,6 +95,7 @@ double Function1(double x)
 
 double Function2(vector<double> x)
 {
+    fcalls++;
     return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
 }
 
