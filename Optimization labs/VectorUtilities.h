@@ -4,8 +4,8 @@
 class VectorUtilities
 {
 public:
-    std::vector<double> AddVectors(std::vector<double> vector1, std::vector<double> vector2);
-    std::vector<double> AddToVector(std::vector<double> vector, double number);
-    std::vector<double> SubtractVectors(std::vector<double> vector1, std::vector<double> vector2);
-    std::vector<double> MultiplyVector(std::vector<double> vector, double multiplier);
+    static std::vector<double> AddVectors(std::vector<double> vector1, std::vector<double> vector2);
+    static std::vector<double> AddToVector(std::vector<double> vector, double number);
+    static std::vector<double> SubtractVectors(std::vector<double> vector1, std::vector<double> vector2);
+    static std::vector<double> MultiplyVector(std::vector<double> vector, double multiplier);
 };
