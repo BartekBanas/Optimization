@@ -7,9 +7,11 @@ using namespace std;
 
 #define M_PI 3.14159265358979323846
 
-double Function2(vector<double> x);
-double Fibonacci(double function(double), double a, double b, double precision);
 double Function1(double x);
+double Function2(vector<double> x);
+double Function3(double x1, double x2);
+
+double Fibonacci(double function(double), double a, double b, double precision);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
 vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon,
                            int nMax);
@@ -62,12 +64,16 @@ void lab1()
 void lab2()
 {
     double step = 0.5;
-    vector<double> x = {1, 0.5};
+    vector<double> x = {2, 1};
     PrintVector(x);
     double alfa = 0.5;
     double epsilon = 1e-3;
     int Nmax = 1000;
 
+    vector<double> result = (HookeJeeves(Function2, x, step, alfa, epsilon, Nmax));
+
+    cout<< fcalls<<endl;
+    
     PrintVector(HookeJeeves(Function2, x, step, alfa, epsilon, Nmax));
 }
 
@@ -99,22 +105,29 @@ double Function2(vector<double> x)
     return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
 }
 
+double Function3(double x1, double x2)
+{
+    fcalls++;
+    return sin(M_PI * sqrt(pow(x1 / M_PI, 2) + pow(x2 / M_PI, 2))) /
+        M_PI * sqrt(pow(x1 / M_PI, 2) + pow(x2 / M_PI, 2));
+}
+
 double Fibonacci(double function(double), double a, double b, double precision)
 {
     double* fibonacci = new double[100]{0, 1};
 
     vector<double> x1(5, 5);
-    
+
 
     vector<double> x2;
     x2.push_back(6.0);
     x2.push_back(2);
     PrintVector(x1);
     PrintVector(x2);
-    
+
     //vector<double> x3 = vektorek.AddVectors(x1, x2);
 
-    
+
     vector<double> x3 = AddVectors(x1, x2);
     PrintVector(x3);
 
@@ -220,7 +233,8 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
     return d;
 }
 
-vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon, int nMax)
+vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon,
+                           int nMax)
 {
     vector<double> error;
     error.push_back(0.00002137);
@@ -232,17 +246,18 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
         x = Trying(xB, step, function);
         if (function(x) < function(xB))
         {
-            do
+            while (function(x) < function(xB))
             {
                 xB_ = xB;
                 xB = x;
                 x = SubtractVectors(MultiplyVector(xB, 2), xB_);
-                x = Trying(xB, step, function);
+                x = Trying(x, step, function);
                 if (fcalls > nMax)
                 {
                     return error;
                 }
-            } while (function(x) > function(xB));
+            }
+            
             x = xB;
         }
         else
@@ -253,7 +268,8 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
         {
             return error;
         }
-    } while (step < epsilon);
+    }
+    while (step < epsilon);
     return xB;
 }
 
@@ -277,7 +293,7 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
     {
         v1 = MultiplyVector(eJ[i], step);
         v2 = AddVectors(x, v1);
-        
+
         if (function(v2) < function(x))
         {
             x = AddVectors(x, MultiplyVector(eJ[i], step));
@@ -293,3 +309,4 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
 
     return x;
 }
+
