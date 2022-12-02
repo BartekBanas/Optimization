@@ -1,17 +1,22 @@
-#include"opt_alg.h"
+#include "opt_alg.h"
 #include <iostream>
 #include <cmath>
+#include "VectorUtilities.h"
 
 using namespace std;
 
 #define M_PI 3.14159265358979323846
 
+double Function2(vector<double> x);
 double Fibonacci(double function(double), double a, double b, double precision);
 double Function1(double x);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
-double Trying(double x, double step, double function(double));
+vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon,
+                           int nMax);
+vector<double> Trying(vector<double> x, double step, double function(vector<double>));
 
 int n = 2;
+int fcalls = 0;
 
 void lab1();
 void lab2();
@@ -24,14 +29,16 @@ int main()
 {
     try
     {
-        lab1();
+        //lab1();
+        lab2();
     }
     catch (string EX_INFO)
     {
         cerr << "ERROR:\n";
-        cerr << EX_INFO << endl << endl;
+        cerr << EX_INFO << endl
+            << endl;
     }
-    
+
     return 0;
 }
 
@@ -49,32 +56,35 @@ void lab1()
     cout << "The result of the lagrange method: " << endl;
     cout << "x = " << resultLagrange << endl;
     cout << "y = " << Function1(resultLagrange) << endl;
-    //cout << "Iterations: " << iterations << endl;
+    // cout << "Iterations: " << iterations << endl;
 }
 
 void lab2()
 {
+    double step = 0.5;
+    vector<double> x = {1, 0.5};
+    PrintVector(x);
+    double alfa = 0.5;
+    double epsilon = 1e-3;
+    int Nmax = 1000;
 
+    PrintVector(HookeJeeves(Function2, x, step, alfa, epsilon, Nmax));
 }
 
 void lab3()
 {
-
 }
 
 void lab4()
 {
-
 }
 
 void lab5()
 {
-
 }
 
 void lab6()
 {
-
 }
 
 double Function1(double x)
@@ -83,14 +93,30 @@ double Function1(double x)
         0.002 * pow(0.1 * x, 2);
 }
 
-double Function2(double x1, double x2)
+double Function2(vector<double> x)
 {
-    return x1*x1 + x2*x2 - cos(2.5*M_PI*x1) - cos(2.5*M_PI*x2) + 2;
+    fcalls++;
+    return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
 }
 
 double Fibonacci(double function(double), double a, double b, double precision)
 {
-    double* fibonacci = new double[100]{ 0, 1 };
+    double* fibonacci = new double[100]{0, 1};
+
+    vector<double> x1(5, 5);
+    
+
+    vector<double> x2;
+    x2.push_back(6.0);
+    x2.push_back(2);
+    PrintVector(x1);
+    PrintVector(x2);
+    
+    //vector<double> x3 = vektorek.AddVectors(x1, x2);
+
+    
+    vector<double> x3 = AddVectors(x1, x2);
+    PrintVector(x3);
 
     int k = 1;
 
@@ -129,13 +155,13 @@ double Fibonacci(double function(double), double a, double b, double precision)
         cs[i + 1] = bs[i + 1] - fibonacci[k - i - 2] / fibonacci[k - i - 1] * (bs[i + 1] - As[i + 1]);
 
         ds[i + 1] = As[i + 1] + bs[i + 1] - cs[i + 1];
-
     }
 
     return cs[i];
 }
 
-double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax) {
+double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax)
+{
     int i = 0;
     double a = aInput;
     double b = bInput;
@@ -143,78 +169,124 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
     double l, m;
     double fcalls = 0;
     double d0, d = 2;
-    do {
-
+    do
+    {
         d0 = d;
         fcalls++;
         l = Function1(a) * (b * b - c * c) + Function1(b) * (c * c - a * a) + Function1(c) * (a * a - b * b);
         m = Function1(a) * (b - c) + Function1(b) * (c - a) + Function1(c) * (a - b);
 
-        if (m <= 0) return 404;
+        if (m <= 0)
+            return 404;
 
         d = 0.5 * l / m;
 
-        if (a<d && c>d) {
-            if (Function1(d) < Function1(c)) {
+        if (a < d && c > d)
+        {
+            if (Function1(d) < Function1(c))
+            {
                 a = a;
                 b = c;
                 c = d;
             }
-            else {
+            else
+            {
                 a = d;
                 b = b;
             }
         }
-        else {
-            if (c<d && b>d)
-                if (Function1(d) < Function1(c)) {
+        else
+        {
+            if (c < d && b > d)
+                if (Function1(d) < Function1(c))
+                {
                     a = c;
                     c = d;
-
                 }
-                else {
+                else
+                {
                     a = a;
 
                     b = d;
                 }
-            else return 4042;
+            else
+                return 4042;
         }
         i++;
         if (fcalls > Nmax)
             return 40422;
-
-    } //while (b - a < eps || abs(d - d0) < gamma);
+    } // while (b - a < eps || abs(d - d0) < gamma);
     while (b - a >= eps && abs(d - d0) >= gamma);
     return d;
 }
 
-double HookeJeeves(double function(double, double), vector<double>x, double step, double alfa, double epsilon, int nMax)
+vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon, int nMax)
 {
-    vector<double> xB = x;
-    vector<double> xBunderscore;
-    x = Trying(xB, step, function);
-    while (function(x[0], x[1]) < function(xB[0], xB[1]))
+    vector<double> error;
+    error.push_back(0.00002137);
+    vector<double> xB;
+    vector<double> xB_;
+    do
     {
-        xBunderscore = xB;
         xB = x;
-        x = 2 * xB - xB;
-        x = Trying(xB, step);
-    }   x = xB;
-}
-
-vector<double> Trying(vector<double> x, double step, double function(double))
-{
-    for (int i = 1; i <= n; ++i)
-    {
-        if(function(x + step * exp(i)) < function(x))
+        x = Trying(xB, step, function);
+        if (function(x) < function(xB))
         {
-            x = x + step * exp(i);
+            do
+            {
+                xB_ = xB;
+                xB = x;
+                x = SubtractVectors(MultiplyVector(xB, 2), xB_);
+                x = Trying(xB, step, function);
+                if (fcalls > nMax)
+                {
+                    return error;
+                }
+            } while (function(x) > function(xB));
+            x = xB;
         }
         else
         {
-            if(function(x - step * exp(i)) < function(x))
+            step = alfa * step;
+        }
+        if (fcalls > nMax)
+        {
+            return error;
+        }
+    } while (step < epsilon);
+    return xB;
+}
+
+vector<double> Trying(vector<double> x, double step, double function(vector<double>))
+{
+    // = {(1, 0), (0, 1), (-1, 0), (0, -1)}
+    vector<double> eJ[4];
+    eJ[0].push_back(1);
+    eJ[0].push_back(0);
+    eJ[1].push_back(0);
+    eJ[1].push_back(1);
+    eJ[2].push_back(-1);
+    eJ[2].push_back(0);
+    eJ[3].push_back(0);
+    eJ[3].push_back(1);
+
+    vector<double> v1;
+    vector<double> v2;
+
+    for (int i = 1; i <= n; ++i)
+    {
+        v1 = MultiplyVector(eJ[i], step);
+        v2 = AddVectors(x, v1);
+        
+        if (function(v2) < function(x))
+        {
+            x = AddVectors(x, MultiplyVector(eJ[i], step));
+        }
+        else
+        {
+            if (function(SubtractVectors(x, MultiplyVector(eJ[i], step))) < function(x))
             {
-                x = x - step * exp(i);
+                x = SubtractVectors(x, MultiplyVector(eJ[i], step));
             }
         }
     }
