@@ -105,11 +105,11 @@ double Function2(vector<double> x)
     return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
 }
 
-double Function3(double x1, double x2)
+double Function3(vector<double> x)
 {
     fcalls++;
-    return sin(M_PI * sqrt(pow(x1 / M_PI, 2) + pow(x2 / M_PI, 2))) /
-        M_PI * sqrt(pow(x1 / M_PI, 2) + pow(x2 / M_PI, 2));
+    return sin(M_PI * sqrt(pow(x[0] / M_PI, 2) + pow(x[1] / M_PI, 2))) /
+        M_PI * sqrt(pow(x[0] / M_PI, 2) + pow(x[1] / M_PI, 2));
 }
 
 double Fibonacci(double function(double), double a, double b, double precision)
@@ -310,3 +310,12 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
     return x;
 }
 
+vector<double> NelderMeadMethod(vector<double> x0, double s, double α, double β, double γ, double δ, double ε, int nMax)
+{
+    auto p = new vector<double>[n];
+    p[0] = x0;
+    for (int i = 1; i < n; ++i)
+    {
+        p[i] = p[0] + s * 
+    }
+}
