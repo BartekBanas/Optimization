@@ -64,13 +64,13 @@ void lab1()
 void lab2()
 {
     double step = 0.5;
-    vector<double> x = {1, 0.5};
+    vector<double> x = {1, 0.75};
     PrintVector(x);
     double alfa = 0.5;
     double epsilon = 1e-3;
     int Nmax = 1000;
 
-    vector<double> result = (HookeJeeves(Function2, x, step, alfa, epsilon, Nmax));
+    vector<double> result = HookeJeeves(Function2, x, step, alfa, epsilon, Nmax);
     
     PrintVector(result);
     cout << "f(x) = " << Function2(result) << endl;
