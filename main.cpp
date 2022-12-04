@@ -64,17 +64,18 @@ void lab1()
 void lab2()
 {
     double step = 0.5;
-    vector<double> x = {2, 1};
+    vector<double> x = {1, 0.5};
     PrintVector(x);
     double alfa = 0.5;
     double epsilon = 1e-3;
     int Nmax = 1000;
 
     vector<double> result = (HookeJeeves(Function2, x, step, alfa, epsilon, Nmax));
-
-    cout<< fcalls<<endl;
     
-    PrintVector(HookeJeeves(Function2, x, step, alfa, epsilon, Nmax));
+    PrintVector(result);
+    cout << "f(x) = " << Function2(result) << endl;
+
+    cout << "Fcalls: " << fcalls << endl;
 }
 
 void lab3()
@@ -310,12 +311,12 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
     return x;
 }
 
-vector<double> NelderMeadMethod(vector<double> x0, double s, double α, double β, double γ, double δ, double ε, int nMax)
-{
-    auto p = new vector<double>[n];
-    p[0] = x0;
-    for (int i = 1; i < n; ++i)
-    {
-        p[i] = p[0] + s * 
-    }
-}
+// vector<double> NelderMeadMethod(vector<double> x0, double s, double α, double β, double γ, double δ, double ε, int nMax)
+// {
+//     auto p = new vector<double>[n];
+//     p[0] = x0;
+//     for (int i = 1; i < n; ++i)
+//     {
+//         p[i] = p[0] + s * 
+//     }
+// }
