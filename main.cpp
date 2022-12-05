@@ -9,7 +9,9 @@ using namespace std;
 
 double Function1(double x);
 double Function2(vector<double> x);
+double Function22(vector<double> x);
 double Function3(double x1, double x2);
+
 
 double Fibonacci(double function(double), double a, double b, double precision);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
@@ -104,6 +106,11 @@ double Function2(vector<double> x)
 {
     fcalls++;
     return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
+}
+
+double Function22(vector<double> x)
+{
+    
 }
 
 double Function3(vector<double> x)
