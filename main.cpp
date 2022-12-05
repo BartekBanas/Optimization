@@ -19,6 +19,13 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
                            int nMax);
 vector<double> Trying(vector<double> x, double step, double function(vector<double>));
 
+matrix function2realistic(matrix K, matrix alfaT, matrix empty);
+matrix df(double t, matrix Y, matrix empty, matrix ud2);
+
+// solution HJ_trial(matrix(*ff)(matrix, matrix, matrix), solution XB, double s, matrix ud1, matrix ud2);
+// solution HJmethod(matrix(*ff)(matrix, matrix, matrix), matrix x0, double s, double alpha, double epsilon, int Nmax, matrix ud1, matrix ud2);
+
+
 int n = 2;
 int fcalls = 0;
 
@@ -78,7 +85,16 @@ void lab2()
     cout << "f(x) = " << Function2(result) << endl;
 
     cout << "Fcalls: " << fcalls << endl;
+
+    matrix k(2, 1, 0.5);
+    matrix x0(2, 1, 0.5);
+    double alphaHJ = 0.5;
+
+    solution resultHJ = HJmethod(function2realistic, x0, step, alphaHJ, epsilon, Nmax);
+    
+    
 }
+
 
 void lab3()
 {
@@ -108,22 +124,8 @@ double Function2(vector<double> x)
     return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
 }
 
-vector<double> additionalFor2(vector<double> αt, vector<double> k)
-{
-    double mr = 1, mc = 9, l = 0.5, b = 0.5, a_ref = M_PI, w_ref = 0;
-    double I = mr * l * l / 3 + mc * l * l;
-    double k1 = k[0], k2 = k[1];
 
-    double M = k1 * (a_ref - αt[0]) + k2 * (w_ref - αt[1]);
-
-    vector<double> result;
-    result.push_back(αt[1]);
-    result.push_back((M - b * αt[1]) / I);
-
-    return result;
-}
-
-matrix df(double t, matrix Y, matrix ud1, matrix ud2)
+matrix df(double t, matrix Y, matrix empty, matrix ud2)
 {
     double mr = 1, mc = 9, l = 0.5, b = 0.5, a_ref = M_PI, w_ref = 0;
     double I = mr * l * l / 3 + mc * l * l;
@@ -136,11 +138,11 @@ matrix df(double t, matrix Y, matrix ud1, matrix ud2)
 }
 
 
-matrix fR(matrix K, matrix αt)
+matrix function2realistic(matrix K, matrix alfaT, matrix empty)
 {
     matrix y;
     matrix Y0(2, 1);
-    matrix* Y = solve_ode(df, 0, 0.1, 100, Y0, αt, K);
+    matrix* Y = solve_ode(df, 0, 0.1, 100, Y0, alfaT, K);
     int n = get_len(Y[0]);
     double a_ref = M_PI, w_ref = 0;
     y = 0;
@@ -148,17 +150,20 @@ matrix fR(matrix K, matrix αt)
         y = y + 10 * pow(a_ref - Y[1](i, 0), 2) + pow(w_ref - Y[1](i, 1), 2) +
             pow(K(0) * (a_ref - Y[1](i, 0)) + K(1) * (w_ref - Y[1](i, 1)), 2);
     y = y * 0.1;
+
     return y;
-}
 
-double funtion2_real(vector<double> αt, vector<double> k)
-{
-    // double αref = _Pi * 
+    // vector<double> result;
     //
-    // double result = 10()
-
-    return 0;
+    // result.push_back(y[0](0, 0));
+    // result.push_back(y[1](50, 1));
+    //
+    // // result.push_back(0);
+    // // result.push_back(0);
+    //
+    // return result;
 }
+
 
 double Function3(vector<double> x)
 {
@@ -373,4 +378,68 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
 //     {
 //         p[i] = p[0] + s * 
 //     }
+// }
+
+// solution HJ_trial(matrix(*ff)(matrix, matrix, matrix), solution XB, double s, matrix ud1, matrix ud2)
+// {
+//     int n = get_dim(XB); //dlugosc wektora X
+//     matrix D = ident_mat(n); //kierunki macierz jednostkowa
+//     //Etap probny konczy sie porazka gdy zostajemy na podstawowym punkcie, nastyepnie zmniejszamy kroki az krok bedzie mniejszy
+//     // od epsilon
+//     //Po zakonczeniu etapu probnego, jesli znalezlismy nowy punkt wykonujemy etap roboczy, odbicie lustrzane starej bazy wzgledem nowej bazy
+//     // z punkty X (odbicia) odpalamy etap probny, to co zwroci  porownujemy z punktem symetrii, jesli jest lepszy wykonujemy kolejny raz etap roboczy
+//     // jesli jest gorszy anulujemy etap roboczy , wracamy do bazy i rozpoczynamy iteracje 
+//     solution X;
+//     for (int i = 0; i < n; ++i)
+//     {
+//         X.x = XB.x + s * D[i];
+//         X.fit_fun(ff, ud1, ud2);
+//         if (X.y < XB.y)
+//             XB = X;
+//         else
+//         {
+//             X.x = XB.x - s * D[i];
+//             X.fit_fun(ff, ud1, ud2);
+//             if (X.y < XB.y)
+//                 XB = X;
+//         }
+//     }
+//     return XB;
+// }
+//
+// solution HJmethod(matrix(*ff)(matrix, matrix, matrix), matrix x0, double s, double alpha, double epsilon, int Nmax, matrix ud1, matrix ud2)
+// {
+//     solution Xopt;
+//         
+//     solution XB(x0), XB_old, X;
+//     XB.fit_fun(ff, ud1, ud2);
+//     //output_HJ << t(XB.x(0)) << t(XB.x(1)) << endl;    //zapis iteracje
+//     while (true)
+//     {
+//         X = HJ_trial(ff, XB, s, ud1, ud2); //odpalenie etapu probnego
+//         if (X.y < XB.y) //sprawdzamy czy etap probny przyniosl poprawe
+//             {
+//             while (true) //etap roboczy wykonywany co chwile
+//                 {
+//                 XB_old = XB;
+//                 XB = X;
+//                 X.x = 2 * XB.x - XB_old.x;
+//                 X.fit_fun(ff, ud1, ud2);
+//                 X = HJ_trial(ff, X, s, ud2, ud2);
+//                 if (X.y >= XB.y)
+//                     break; //przerwanie etapu roboczego
+//                 if (solution::f_calls > Nmax)
+//                     return XB;
+//                 }
+//             }
+//         else //zmniejszamy dlugosc kroku
+//             s *= alpha;
+//         if (s<epsilon || solution::f_calls>Nmax) { //warunki stopu
+//             XB.flag = 0;
+//             return XB;
+//         }
+//         //output_HJ << t(XB.x(0)) << t(XB.x(1)) << endl;    //zapis iteracje
+//     }
+//     Xopt.flag = 1;
+//     return Xopt;
 // }
