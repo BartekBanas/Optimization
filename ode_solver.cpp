@@ -1,4 +1,4 @@
-//Ten plik nie powinien byæ edytowany
+//Ten plik nie powinien by? edytowany
 
 #include"ode_solver.h"
 

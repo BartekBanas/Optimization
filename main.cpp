@@ -9,7 +9,7 @@ using namespace std;
 
 double Function1(double x);
 double Function2(vector<double> x);
-double Function22(vector<double> x);
+double funtion2_real(vector<double> x);
 double Function3(double x1, double x2);
 
 
@@ -73,7 +73,7 @@ void lab2()
     int Nmax = 1000;
 
     vector<double> result = HookeJeeves(Function2, x, step, alfa, epsilon, Nmax);
-    
+
     PrintVector(result);
     cout << "f(x) = " << Function2(result) << endl;
 
@@ -108,9 +108,56 @@ double Function2(vector<double> x)
     return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
 }
 
-double Function22(vector<double> x)
+vector<double> additionalFor2(vector<double> αt, vector<double> k)
 {
-    
+    double mr = 1, mc = 9, l = 0.5, b = 0.5, a_ref = M_PI, w_ref = 0;
+    double I = mr * l * l / 3 + mc * l * l;
+    double k1 = k[0], k2 = k[1];
+
+    double M = k1 * (a_ref - αt[0]) + k2 * (w_ref - αt[1]);
+
+    vector<double> result;
+    result.push_back(αt[1]);
+    result.push_back((M - b * αt[1]) / I);
+
+    return result;
+}
+
+matrix df(double t, matrix Y, matrix ud1, matrix ud2)
+{
+    double mr = 1, mc = 9, l = 0.5, b = 0.5, a_ref = M_PI, w_ref = 0;
+    double I = mr * l * l / 3 + mc * l * l;
+    double k1 = ud2(0), k2 = ud2(1);
+    double M = k1 * (a_ref - Y(0)) + k2 * (w_ref - Y(1));
+    matrix dY(2, 1);
+    dY(0) = Y(1);
+    dY(1) = (M - b * Y(1)) / I;
+    return dY;
+}
+
+
+matrix fR(matrix K, matrix αt)
+{
+    matrix y;
+    matrix Y0(2, 1);
+    matrix* Y = solve_ode(df, 0, 0.1, 100, Y0, αt, K);
+    int n = get_len(Y[0]);
+    double a_ref = M_PI, w_ref = 0;
+    y = 0;
+    for (int i = 0; i < n; i++)
+        y = y + 10 * pow(a_ref - Y[1](i, 0), 2) + pow(w_ref - Y[1](i, 1), 2) +
+            pow(K(0) * (a_ref - Y[1](i, 0)) + K(1) * (w_ref - Y[1](i, 1)), 2);
+    y = y * 0.1;
+    return y;
+}
+
+double funtion2_real(vector<double> αt, vector<double> k)
+{
+    // double αref = _Pi * 
+    //
+    // double result = 10()
+
+    return 0;
 }
 
 double Function3(vector<double> x)
@@ -265,7 +312,7 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
                     return error;
                 }
             }
-            
+
             x = xB;
         }
         else
