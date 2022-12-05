@@ -91,8 +91,9 @@ void lab2()
     double alphaHJ = 0.5;
 
     solution resultHJ = HJmethod(function2realistic, x0, step, alphaHJ, epsilon, Nmax);
-    
-    
+    cout << resultHJ.x << endl;
+    cout << resultHJ.y << endl;
+    cout << resultHJ.f_calls << endl;
 }
 
 
