@@ -45,7 +45,7 @@ solution lag(matrix(*ff)(matrix, matrix, matrix), double a, double b, double eps
 	}
 }
 
-solution HJ(matrix(*ff)(matrix, matrix, matrix), matrix x0, double s, double alpha, double epsilon, int Nmax, matrix ud1, matrix ud2)
+solution HJmethod(matrix(*ff)(matrix, matrix, matrix), matrix x0, double s, double alpha, double epsilon, int Nmax, matrix ud1, matrix ud2)
 {
 	
 	solution Xopt;
