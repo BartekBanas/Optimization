@@ -72,7 +72,7 @@ void lab1()
 
 void lab2()
 {
-    double step = 0.5;
+    double step = 0.25;
     vector<double> x = {1, 0.75};
     PrintVector(x);
     double alfa = 0.5;
