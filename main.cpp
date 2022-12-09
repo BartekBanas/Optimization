@@ -175,7 +175,6 @@ matrix function2realistic(matrix K, matrix alfaT, matrix empty)
     // return result;
 }
 
-
 double Function3(vector<double> x)
 {
     fcalls++;
@@ -381,12 +380,36 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
     return x;
 }
 
-// vector<double> NelderMeadMethod(vector<double> x0, double s, double α, double β, double γ, double δ, double ε, int nMax)
-// {
-//     auto p = new vector<double>[n];
-//     p[0] = x0;
-//     for (int i = 1; i < n; ++i)
-//     {
-//         p[i] = p[0] + s * 
-//     }
-// }
+vector<double> NelderMeadMethod(vector<double> x0, double s, double α, double β, double γ, double δ, double ε, int nMax)
+{
+    vector<double> e[4]; {
+        e[0].push_back(1);
+        e[0].push_back(0);
+        e[1].push_back(0);
+        e[1].push_back(1);
+        e[2].push_back(-1);
+        e[2].push_back(0);
+        e[3].push_back(0);
+        e[3].push_back(1);
+    }
+    
+    auto p = new vector<double>[n];
+    p[0] = x0;
+    for (int i = 1; i < n; ++i)
+    {
+        p[i] = AddVectors(p[0], MultiplyVector(e[i], s));
+    }
+
+    double pMin, pMax;
+    double min, max;
+
+    for (auto vector : p)
+    {
+        if(Function3(vector) > max)
+        {
+            
+        }
+    }
+}
+
+vector<double> Punishment()

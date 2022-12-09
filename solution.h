@@ -21,6 +21,7 @@ public:
 	solution(const matrix&);
 	solution(int, double*); // throw (string);
 	solution(const solution&);
+	solution(int n, vector<double> vector);
 	solution& operator=(const solution&);
 	matrix fit_fun(matrix(*)(matrix, matrix, matrix), matrix = NAN, matrix = NAN); // throw (string);
 	matrix grad(matrix(*)(matrix, matrix, matrix), matrix = NAN, matrix = NAN); // throw (string);

@@ -50,6 +50,29 @@ solution::solution(int n, double* A)
 	}
 }
 
+solution::solution(int n, vector<double> vector)
+{
+	try
+	{
+		double *arr = new double[vector.size()];
+		for (size_t i = 0; i < vector.size(); ++i)
+		{
+			arr[i] = vector[i];
+		}
+		
+		x = matrix(n, arr);
+		g = NAN;
+		H = NAN;
+		y = NAN;
+		ud = NAN;
+		flag = -1;
+	}
+	catch (string ex_info)
+	{
+		throw ("solution::solution(int,double*):\n" + ex_info);
+	}
+}
+
 solution::solution(const solution& A)
 {
 	x = A.x;
