@@ -18,6 +18,7 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
 vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon,
                            int nMax);
 vector<double> Trying(vector<double> x, double step, double function(vector<double>));
+vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta, double epsilon, int nMax);
 
 matrix function2realistic(matrix K, matrix alfaT, matrix empty);
 matrix df(double t, matrix Y, matrix empty, matrix ud2);
@@ -41,7 +42,9 @@ int main()
     try
     {
         //lab1();
-        lab2();
+        //lab2();
+        lab3();
+        
     }
     catch (string EX_INFO)
     {
@@ -109,6 +112,18 @@ void lab2()
 
 void lab3()
 {
+    vector<double> x = {1, 0.75};
+    double step = 0.25;
+    PrintVector(x);
+    double alfa = 0.5;
+    double beta =0;
+    double gamma =0;
+    double delta =0;
+    double epsilon = 1e-3;
+    int Nmax = 1000;
+    
+
+    vector<double> result = NelderMeadMethod(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
 }
 
 void lab4()
@@ -393,9 +408,9 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
         e[3].push_back(1);
     }
     
-    auto p = new vector<double>[n];
+    auto p = new vector<double>[n + 1];
     p[0] = x0;
-    for (int i = 1; i < n; ++i)
+    for (int i = 1; i <= n; ++i)
     {
         p[i] = AddVectors(p[0], MultiplyVector(e[i], s));
     }
@@ -403,16 +418,13 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
     double pMin, pMax;
     double min, max;
 
-    for (auto vector : p)
-    {
-        if(Function3(vector) > max)
-        {
-            
-        }
-    }
+    solution solution(2, x0);
+    cout << "Solutione: " << solution << endl;
+
+    return x0;
 }
 
-vector<double> Punishment()
-{
-    
-}
+// vector<double> Punishment()
+// {
+//     
+// }
