@@ -380,7 +380,7 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
     return x;
 }
 
-vector<double> NelderMeadMethod(vector<double> x0, double s, double α, double β, double γ, double δ, double ε, int nMax)
+vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta, double epsilon, int nMax)
 {
     vector<double> e[4]; {
         e[0].push_back(1);
@@ -413,3 +413,6 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double α, double �
 }
 
 vector<double> Punishment()
+{
+    
+}
