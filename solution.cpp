@@ -54,10 +54,12 @@ solution::solution(int n, vector<double> vector)
 {
 	try
 	{
+		cout<< "vector size: "<<vector.size()<<endl;
 		double *arr = new double[vector.size()];
 		for (size_t i = 0; i < vector.size(); ++i)
 		{
 			arr[i] = vector[i];
+			cout<< arr[i] << "   ";
 		}
 		
 		x = matrix(n, arr);
