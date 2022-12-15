@@ -415,7 +415,7 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
         p[i] = AddVectors(p[0], MultiplyVector(e[i], s));
     }
 
-    double pMin, pMax;
+    double pMin = 0, pMax = 0;
     double min, max;
 
     solution solution(2, x0);
