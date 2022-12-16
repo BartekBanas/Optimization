@@ -18,7 +18,8 @@ double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax
 vector<double> HookeJeeves(double function(vector<double>), vector<double> x, double step, double alfa, double epsilon,
                            int nMax);
 vector<double> Trying(vector<double> x, double step, double function(vector<double>));
-vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta, double epsilon, int nMax);
+vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
+                                double epsilon, int nMax);
 
 matrix function2realistic(matrix K, matrix alfaT, matrix empty);
 matrix df(double t, matrix Y, matrix empty, matrix ud2);
@@ -44,7 +45,6 @@ int main()
         //lab1();
         //lab2();
         lab3();
-        
     }
     catch (string EX_INFO)
     {
@@ -99,7 +99,6 @@ void lab2()
     cout << resultHJ.f_calls << endl;
 
 
-
     matrix* simulation = solve_ode(df, 0, 0.1, 100, matrix(2, 1), matrix(0), resultHJ.x);
     cout << "HJ-a" << "Hj-w" << endl;
     for (int i = 0; i < 1000; ++i)
@@ -116,12 +115,12 @@ void lab3()
     double step = 0.25;
     PrintVector(x);
     double alfa = 0.5;
-    double beta =0;
-    double gamma =0;
-    double delta =0;
+    double beta = 0;
+    double gamma = 0;
+    double delta = 0;
     double epsilon = 1e-3;
     int Nmax = 1000;
-    
+
 
     vector<double> result = NelderMeadMethod(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
 }
@@ -395,9 +394,11 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
     return x;
 }
 
-vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta, double epsilon, int nMax)
+vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
+                                double epsilon, int nMax)
 {
-    vector<double> e[4]; {
+    vector<double> e[4];
+    {
         e[0].push_back(1);
         e[0].push_back(0);
         e[1].push_back(0);
@@ -407,7 +408,7 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
         e[3].push_back(0);
         e[3].push_back(1);
     }
-    
+
     auto p = new vector<double>[n + 1];
     p[0] = x0;
     for (int i = 1; i <= n; ++i)
