@@ -416,8 +416,39 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
         p[i] = AddVectors(p[0], MultiplyVector(e[i], s));
     }
 
-    double pMin = 0, pMax = 0;
-    double min, max;
+    int pMin = 0, pMax = 0;
+    double min = 0, max = 0;
+
+    for (int i = 0; i <= n; ++i)    //Finding maximum and minimum values
+    {
+        if(Function3(p[i]) > max)
+        {
+            pMax = i;
+            max = Function3(p[i]);
+        }
+
+        if(Function3(p[i]) < min)
+        {
+            pMin = i;
+            min = Function3(p[i]);
+        }
+    }
+
+    vector<double> p_;
+    
+    for (int i = 0; i < n; ++i)
+    {
+        p_ = AddVectors(p_, p[i]);
+    }   p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
+    
+    vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
+
+    if (Function3(pOdb) < Function3(p[pMin]))
+    {
+        vector<double> pe = AddVectors(p_, MultiplyVector())
+    }
+
+    
 
     solution solution(2, x0);
     cout << "Solutione: " << solution << endl;
