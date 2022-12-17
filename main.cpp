@@ -20,6 +20,8 @@ vector<double> HookeJeeves(double function(vector<double>), vector<double> x, do
 vector<double> Trying(vector<double> x, double step, double function(vector<double>));
 vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
                                 double epsilon, int nMax);
+vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
+                                double epsilon, int nMax);
 
 matrix function2realistic(matrix K, matrix alfaT, matrix empty);
 matrix df(double t, matrix Y, matrix empty, matrix ud2);
@@ -122,7 +124,8 @@ void lab3()
     int Nmax = 1000;
 
 
-    vector<double> result = NelderMeadMethod(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
+    vector<double> result = NelderMeadMethodAi(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
+    PrintVector(result);
 }
 
 void lab4()
@@ -445,7 +448,7 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
 
     if (Function3(pOdb) < Function3(p[pMin]))
     {
-        vector<double> pe = AddVectors(p_, MultiplyVector())
+        vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
     }
 
     
@@ -460,3 +463,97 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
 // {
 //     
 // }
+
+vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
+                                double epsilon, int nMax)
+{
+    vector<double> e[4];
+    {
+        e[0].push_back(1);
+        e[0].push_back(0);
+        e[1].push_back(0);
+        e[1].push_back(1);
+        e[2].push_back(-1);
+        e[2].push_back(0);
+        e[3].push_back(0);
+        e[3].push_back(-1);
+    }
+
+    cout << "Fcalls: " << fcalls << endl;
+    
+    auto p = new vector<double>[n + 1];
+    p[0] = x0;
+    for (int i = 1; i <= n; ++i)
+    {
+        p[i] = AddVectors(p[0], MultiplyVector(e[i], s));
+        
+    }
+
+    int pMin = 0, pMax = 0;
+    double min = 0, max = 0;
+
+    for (int i = 0; i <= n; ++i)    //Finding maximum and minimum values
+        {
+        if(Function3(p[i]) > max)
+        {
+            pMax = i;
+            max = Function3(p[i]);
+            cout << "Fcalls 2: " << fcalls << endl;
+        }
+
+        if(Function3(p[i]) < min)
+        {
+            cout << "Fcalls 3: " << fcalls << endl;
+            pMin = i;
+            min = Function3(p[i]);
+            
+        }
+        }
+
+    cout << "Fcalls 4: " << fcalls << endl;
+
+    vector<double> p_(2, 0);
+
+    for (int i = 0; i < n; ++i)
+    {
+        cout << "Fcalls 5: " << fcalls << endl;
+        p_ = AddVectors(p_, p[i]);
+    }   p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
+
+    vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
+
+    if (Function3(pOdb) < Function3(p[pMin]))
+    {
+        vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
+        if (Function3(pe) < Function3(p[pMin]))
+        {
+            p[pMax] = pe;
+        }
+        else
+        {
+            p[pMax] = pOdb;
+        }
+    }
+    else if (Function3(pOdb) < Function3(p[pMax]))
+    {
+        p[pMax] = pOdb;
+    }
+    else
+    {
+        vector<double> pc = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), beta));
+        if (Function3(pc) < Function3(p[pMax]))
+        {
+            p[pMax] = pc;
+        }
+        else
+        {
+            vector<double> pd = AddVectors(p[pMin], MultiplyVector(SubtractVectors(p[pMax], p[pMin]), delta));
+            p[pMax] = pd;
+        }
+    }
+
+    // Repeat steps 1-5 until convergence or maximum number of iterations reached
+    // ...
+
+    return p[pMin];
+}
