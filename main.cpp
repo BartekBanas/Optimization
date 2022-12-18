@@ -508,13 +508,10 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
         }
     }
 
-    cout << "Fcalls 4: " << fcalls << endl;
-
     vector<double> p_(2, 0);
 
     for (int i = 0; i < n; ++i)
     {
-        cout << "Fcalls 5: " << fcalls << endl;
         p_ = AddVectors(p_, p[i]);
     }
     p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
