@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include "VectorUtilities.h"
+#include "Optimization labs/Algorithms.h"
 
 using namespace std;
 
@@ -125,6 +126,10 @@ void lab3()
 
 
     vector<double> result = NelderMeadMethodAi(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
+
+    result = nelderMead(*result, alfa, gamma, delta, epsilon, Nmax);
+    PrintVector(result);
+    
     PrintVector(result);
 }
 
