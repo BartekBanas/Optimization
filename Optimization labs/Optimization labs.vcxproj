@@ -206,6 +206,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Algorithms.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\matrix.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="..\solution.h" />
     <ClInclude Include="..\user_funs.h" />
     <ClInclude Include="..\VectorUtilities.h" />
+    <ClInclude Include="Algorithms.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

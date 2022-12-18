@@ -165,7 +165,6 @@ matrix df(double t, matrix Y, matrix empty, matrix ud2)
     return dY;
 }
 
-
 matrix function2realistic(matrix K, matrix alfaT, matrix empty)
 {
     matrix y;
