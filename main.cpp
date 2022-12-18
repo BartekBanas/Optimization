@@ -22,7 +22,7 @@ vector<double> Trying(vector<double> x, double step, double function(vector<doub
 vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
                                 double epsilon, int nMax);
 vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
-                                double epsilon, int nMax);
+                                  double epsilon, int nMax);
 
 matrix function2realistic(matrix K, matrix alfaT, matrix empty);
 matrix df(double t, matrix Y, matrix empty, matrix ud2);
@@ -126,10 +126,10 @@ void lab3()
 
 
     vector<double> result = NelderMeadMethodAi(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
-
-    result = nelderMead(*result, alfa, gamma, delta, epsilon, Nmax);
     PrintVector(result);
-    
+
+    result = nelderMead(result, alfa, gamma, delta, epsilon, Nmax);
+
     PrintVector(result);
 }
 
@@ -426,15 +426,15 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
     int pMin = 0, pMax = 0;
     double min = 0, max = 0;
 
-    for (int i = 0; i <= n; ++i)    //Finding maximum and minimum values
+    for (int i = 0; i <= n; ++i) //Finding maximum and minimum values
     {
-        if(Function3(p[i]) > max)
+        if (Function3(p[i]) > max)
         {
             pMax = i;
             max = Function3(p[i]);
         }
 
-        if(Function3(p[i]) < min)
+        if (Function3(p[i]) < min)
         {
             pMin = i;
             min = Function3(p[i]);
@@ -442,12 +442,13 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
     }
 
     vector<double> p_;
-    
+
     for (int i = 0; i < n; ++i)
     {
         p_ = AddVectors(p_, p[i]);
-    }   p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
-    
+    }
+    p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
+
     vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
 
     if (Function3(pOdb) < Function3(p[pMin]))
@@ -455,7 +456,6 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
         vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
     }
 
-    
 
     solution solution(2, x0);
     cout << "Solutione: " << solution << endl;
@@ -469,7 +469,7 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
 // }
 
 vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
-                                double epsilon, int nMax)
+                                  double epsilon, int nMax)
 {
     vector<double> e[4];
     {
@@ -483,36 +483,30 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
         e[3].push_back(-1);
     }
 
-    cout << "Fcalls: " << fcalls << endl;
-    
     auto p = new vector<double>[n + 1];
     p[0] = x0;
     for (int i = 1; i <= n; ++i)
     {
         p[i] = AddVectors(p[0], MultiplyVector(e[i], s));
-        
     }
 
     int pMin = 0, pMax = 0;
     double min = 0, max = 0;
 
-    for (int i = 0; i <= n; ++i)    //Finding maximum and minimum values
-        {
-        if(Function3(p[i]) > max)
+    for (int i = 0; i <= n; ++i) //Finding maximum and minimum values
+    {
+        if (Function3(p[i]) > max)
         {
             pMax = i;
             max = Function3(p[i]);
-            cout << "Fcalls 2: " << fcalls << endl;
         }
 
-        if(Function3(p[i]) < min)
+        if (Function3(p[i]) < min)
         {
-            cout << "Fcalls 3: " << fcalls << endl;
             pMin = i;
             min = Function3(p[i]);
-            
         }
-        }
+    }
 
     cout << "Fcalls 4: " << fcalls << endl;
 
@@ -522,7 +516,8 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
     {
         cout << "Fcalls 5: " << fcalls << endl;
         p_ = AddVectors(p_, p[i]);
-    }   p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
+    }
+    p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
 
     vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
 
