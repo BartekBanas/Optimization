@@ -129,7 +129,6 @@ void lab3()
     PrintVector(result);
 
     result = nelderMead(result, alfa, gamma, delta, epsilon, Nmax);
-
     PrintVector(result);
 }
 
@@ -425,34 +424,37 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
     int pMin = 0, pMax = 0;
     double min = 0, max = 0;
 
-    for (int i = 0; i <= n; ++i) //Finding maximum and minimum values
+    while(max < epsilon || Function3(p[pMin]) - Function3(p[n]) < epsilon)
     {
-        if (Function3(p[i]) > max)
+        for (int i = 0; i <= n; ++i)    //Finding maximum and minimum values
+            {
+            if (Function3(p[i]) > max)
+            {
+                pMax = i;
+                max = Function3(p[i]);
+            }
+
+            if (Function3(p[i]) < min)
+            {
+                pMin = i;
+                min = Function3(p[i]);
+            }
+            }
+
+        vector<double> p_;
+
+        for (int i = 0; i < n; ++i)
         {
-            pMax = i;
-            max = Function3(p[i]);
+            p_ = AddVectors(p_, p[i]);
         }
+        p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
 
-        if (Function3(p[i]) < min)
+        vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
+
+        if (Function3(pOdb) < Function3(p[pMin]))
         {
-            pMin = i;
-            min = Function3(p[i]);
+            vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
         }
-    }
-
-    vector<double> p_;
-
-    for (int i = 0; i < n; ++i)
-    {
-        p_ = AddVectors(p_, p[i]);
-    }
-    p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
-
-    vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
-
-    if (Function3(pOdb) < Function3(p[pMin]))
-    {
-        vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
     }
 
 
