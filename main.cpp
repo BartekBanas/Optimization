@@ -157,7 +157,6 @@ double Function2(vector<double> x)
     return x[0] * x[0] + x[1] * x[1] - cos(2.5 * M_PI * x[0]) - cos(2.5 * M_PI * x[1]) + 2;
 }
 
-
 matrix df(double t, matrix Y, matrix empty, matrix ud2)
 {
     double mr = 1, mc = 9, l = 0.5, b = 0.5, a_ref = M_PI, w_ref = 0;
@@ -493,58 +492,61 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
     int pMin = 0, pMax = 0;
     double min = 0, max = 0;
 
-    for (int i = 0; i <= n; ++i) //Finding maximum and minimum values
+    while(max < epsilon || Function3(p[pMin]) - Function3(p[n]) < epsilon)
     {
-        if (Function3(p[i]) > max)
+        for (int i = 0; i <= n; ++i) //Finding maximum and minimum values
+            {
+            if (Function3(p[i]) > max)
+            {
+                pMax = i;
+                max = Function3(p[i]);
+            }
+
+            if (Function3(p[i]) < min)
+            {
+                pMin = i;
+                min = Function3(p[i]);
+            }
+            }
+
+        vector<double> p_(2, 0);
+
+        for (int i = 0; i < n; ++i)
         {
-            pMax = i;
-            max = Function3(p[i]);
+            p_ = AddVectors(p_, p[i]);
         }
+        p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
 
-        if (Function3(p[i]) < min)
+        vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
+
+        if (Function3(pOdb) < Function3(p[pMin]))
         {
-            pMin = i;
-            min = Function3(p[i]);
+            vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
+            if (Function3(pe) < Function3(p[pMin]))
+            {
+                p[pMax] = pe;
+            }
+            else
+            {
+                p[pMax] = pOdb;
+            }
         }
-    }
-
-    vector<double> p_(2, 0);
-
-    for (int i = 0; i < n; ++i)
-    {
-        p_ = AddVectors(p_, p[i]);
-    }
-    p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
-
-    vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
-
-    if (Function3(pOdb) < Function3(p[pMin]))
-    {
-        vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
-        if (Function3(pe) < Function3(p[pMin]))
-        {
-            p[pMax] = pe;
-        }
-        else
+        else if (Function3(pOdb) < Function3(p[pMax]))
         {
             p[pMax] = pOdb;
         }
-    }
-    else if (Function3(pOdb) < Function3(p[pMax]))
-    {
-        p[pMax] = pOdb;
-    }
-    else
-    {
-        vector<double> pc = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), beta));
-        if (Function3(pc) < Function3(p[pMax]))
-        {
-            p[pMax] = pc;
-        }
         else
         {
-            vector<double> pd = AddVectors(p[pMin], MultiplyVector(SubtractVectors(p[pMax], p[pMin]), delta));
-            p[pMax] = pd;
+            vector<double> pc = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), beta));
+            if (Function3(pc) < Function3(p[pMax]))
+            {
+                p[pMax] = pc;
+            }
+            else
+            {
+                vector<double> pd = AddVectors(p[pMin], MultiplyVector(SubtractVectors(p[pMax], p[pMin]), delta));
+                p[pMax] = pd;
+            }
         }
     }
 
