@@ -436,6 +436,7 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
             {
                 pMax = p[i];
                 max = Function3(p[i]);
+                cout << "Point nr 1, fcalls: " << fcalls << endl;
             }
 
             if (Function3(p[i]) < min)
@@ -450,14 +451,20 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
         for (int i = 0; i < n; ++i)
         {
             p_ = AddVectors(p_, p[i]);
-        }
+            cout << "Point nr 2, fcalls: " << fcalls << endl;
+        }   cout << "Point nr 2.1, fcalls: " << fcalls << endl;
         p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
+        
 
         vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, pMax), alfa));
+        cout << "Point nr 2.2, fcalls: " << fcalls << endl;
 
         if (Function3(pOdb) < Function3(pMin))
         {
-            vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
+            cout << "Point nr 2.3, fcalls: " << fcalls << endl;
+            vector<double> pe(2, 0);
+            pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
+            cout << "Point nr 2.5, fcalls: " << fcalls << endl;
 
             if (Function3(pe) < Function3(pOdb))
             {
@@ -466,7 +473,7 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
             else
             {
                 pMax = pOdb;
-            }
+            }   cout << "Point nr 3, fcalls: " << fcalls << endl;
         }
         else
         {
