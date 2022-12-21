@@ -536,18 +536,14 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
     int pMin = 0, pMax = 0;
     double min = 0, max = 0;
 
-    while (max < epsilon || Function3(p[pMin]) - Function3(p[n]) < epsilon)
-    {
+    while (max < epsilon || Function3(p[pMin]) - Function3(p[n]) < epsilon) {
         for (int i = 0; i <= n; ++i) //Finding maximum and minimum values
         {
-            if (Function3(p[i]) > max)
-            {
+            if (Function3(p[i]) > max) {
                 pMax = i;
                 max = Function3(p[i]);
             }
-
-            if (Function3(p[i]) < min)
-            {
+            if (Function3(p[i]) < min) {
                 pMin = i;
                 min = Function3(p[i]);
             }
@@ -556,9 +552,8 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
         vector<double> p_(2, 0);
 
         for (int i = 0; i < n; ++i)
-        {
             p_ = AddVectors(p_, p[i]);
-        }
+        
         p_ = MultiplyVector(p_, 1 / static_cast<double>(n));
 
         vector<double> pOdb = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), alfa));
@@ -566,37 +561,28 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
         if (Function3(pOdb) < Function3(p[pMin]))
         {
             vector<double> pe = AddVectors(p_, MultiplyVector(SubtractVectors(pOdb, p_), gamma));
-            if (Function3(pe) < Function3(p[pMin]))
-            {
+            if (Function3(pe) < Function3(p[pMin])) {
                 p[pMax] = pe;
             }
-            else
-            {
+            else {
                 p[pMax] = pOdb;
             }
         }
-        else if (Function3(pOdb) < Function3(p[pMax]))
-        {
+        else if (Function3(pOdb) < Function3(p[pMax])) {
             p[pMax] = pOdb;
         }
-        else
-        {
+        else {
             vector<double> pc = AddVectors(p_, MultiplyVector(SubtractVectors(p_, p[pMax]), beta));
-            if (Function3(pc) < Function3(p[pMax]))
-            {
+            if (Function3(pc) < Function3(p[pMax])) {
                 p[pMax] = pc;
             }
-            else
-            {
+            else {
                 vector<double> pd = AddVectors(p[pMin], MultiplyVector(SubtractVectors(p[pMax], p[pMin]), delta));
                 p[pMax] = pd;
             }
         }
     }
-
-    // Repeat steps 1-5 until convergence or maximum number of iterations reached
-    // ...
-
+    
     return p[pMin];
 }
 
