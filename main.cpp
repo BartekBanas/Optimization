@@ -599,3 +599,44 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
 
     return p[pMin];
 }
+
+double penalty(const vector<double>& x, double r)
+{
+    double sum = 0;
+    for (size_t i = 0; i < x.size(); i++)
+    {
+        if (x[i] < 0)
+        {
+            sum += r * std::pow(-x[i], 2);
+        }
+    }
+    return sum;
+}
+
+double PunishMeDaddyOut(const std::vector<double>& x, double r)
+{
+    double sum = 0;
+    for (size_t i = 0; i < x.size(); i++)
+    {
+        if (x[i] < 0)
+        {
+            sum += r * std::pow(-x[i], 2);
+        }
+    }
+    return sum;
+}
+
+double PunishMeDaddyIn(const std::vector<double>& x, double r)
+{
+    double sum = 0;
+    for (size_t i = 0; i < x.size(); i++)
+    {
+        if (x[i] < 0)
+        {
+            sum += r * std::pow(-x[i], 2);
+        }
+    }
+    return sum + Function3(x);
+}
+
+
