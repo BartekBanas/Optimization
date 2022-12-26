@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include <vector>
+#include "VectorUtilities.h"
 
 std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint, double alpha, double gamma, double rho,
                                double sigma, int maxIterations) 
