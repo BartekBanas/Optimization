@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include "VectorUtilities.h"
-#include "Optimization labs/Algorithms.h"
+#include "Algorithms.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ using namespace std;
 double Function1(double x);
 double Function2(vector<double> x);
 double funtion2_real(vector<double> x);
-double Function3(double x1, double x2);
+double Function3(vector<double> x);
 
 
 double Fibonacci(double function(double), double a, double b, double precision);
@@ -128,7 +128,7 @@ void lab3()
     result = NelderMeadMethod(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
     PrintVector(result);
     
-    result = nelderMead(result, alfa, gamma, delta, epsilon, Nmax);
+    result = nelderMead(Function3 ,result, alfa, gamma, delta, epsilon, Nmax);
     PrintVector(result);
 }
 

@@ -113,3 +113,17 @@ std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), co
     return simplex[0];
 }
 
+double GoldenRatioMethod(double pointA, double pointB, double epsilon)
+{
+    double alfa = (sqrt(5) - 1) / 2;
+
+    double* a = new double[100] {0};
+    double* b = new double[100] {pointB};
+    double* c = new double[100];
+    double* d = new double[100];
+
+    for (int i = 0; b[i] - a[i] < epsilon; ++i)
+    {
+        
+    }
+}
