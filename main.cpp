@@ -27,9 +27,6 @@ vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, doub
 matrix function2realistic(matrix K, matrix alfaT, matrix empty);
 matrix df(double t, matrix Y, matrix empty, matrix ud2);
 
-// solution HJ_trial(matrix(*ff)(matrix, matrix, matrix), solution XB, double s, matrix ud1, matrix ud2);
-// solution HJmethod(matrix(*ff)(matrix, matrix, matrix), matrix x0, double s, double alpha, double epsilon, int Nmax, matrix ud1, matrix ud2);
-
 
 int n = 2;
 int fcalls = 0;
@@ -506,11 +503,6 @@ vector<double> NelderMeadMethod(vector<double> x0, double s, double alfa, double
     return pMin;
 }
 
-// vector<double> Punishment()
-// {
-//     
-// }
-
 vector<double> NelderMeadMethodAi(vector<double> x0, double s, double alfa, double beta, double gamma, double delta,
                                   double epsilon, int nMax)
 {
@@ -624,5 +616,3 @@ double PunishMeDaddyIn(const std::vector<double>& x, double r)
     }
     return sum + Function3(x);
 }
-
-
