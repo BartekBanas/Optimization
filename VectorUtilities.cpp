@@ -45,3 +45,8 @@ void PrintVector(std::vector<double> vector)
 {
     std::cout << "Vector {" << vector[0] << ", " << vector[1] << "}" << endl;
 }
+
+double VectorLength(std::vector<double> vector)
+{
+    return sqrt(vector[0] * vector[0] + vector[1] * vector[1]);
+}

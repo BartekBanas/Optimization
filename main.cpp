@@ -12,7 +12,7 @@ double Function1(double x);
 double Function2(vector<double> x);
 double funtion2_real(vector<double> x);
 double Function3(vector<double> x);
-
+double Function4(vector<double> x);
 
 double Fibonacci(double function(double), double a, double b, double precision);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
@@ -44,7 +44,8 @@ int main()
     {
         //lab1();
         //lab2();
-        lab3();
+        //lab3();
+        lab4();
     }
     catch (string EX_INFO)
     {
@@ -134,7 +135,15 @@ void lab3()
 
 void lab4()
 {
+    std::vector<double> a = {0, 0};
+    std::vector<double> b = {10, 10};
+    
+    PrintVector(a);
+    PrintVector(b);
+
+    PrintVector(GoldenSectionSearch(Function4, a, b, 0.001, 1000));
 }
+
 
 void lab5()
 {
@@ -199,6 +208,12 @@ double Function3(vector<double> x)
     fcalls++;
     return sin(M_PI * sqrt(pow(x[0] / M_PI, 2) + pow(x[1] / M_PI, 2))) /
         M_PI * sqrt(pow(x[0] / M_PI, 2) + pow(x[1] / M_PI, 2));
+}
+
+double Function4(vector<double> x)
+{
+    fcalls++;
+    return pow(x[0] + 2 * x[1] - 7 ,2) + pow(2 * x[0] + x[1] - 5, 2);
 }
 
 double Fibonacci(double function(double), double a, double b, double precision)
