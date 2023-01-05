@@ -3,9 +3,12 @@
 #include <algorithm>
 #include <vector>
 #include "VectorUtilities.h"
+#include <cmath>
+
+using namespace std;
 
 ;
-std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint, double alpha, double gamma, double rho,
+vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint, double alpha, double gamma, double rho,
                                double sigma, int maxIterations) 
 {
     // Inicjalizujemy sympleks jako tablicę wektorów
@@ -112,28 +115,27 @@ std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), co
     return simplex[0];
 }
 
-// double GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon, int nMax)
-// {
-//     double alfa = (sqrt(5) - 1) / 2;
-//
-//     vector<double>* a = new vector<double>[100] (2, 0.0);
-//     vector<double>* b = new vector<double>[100] {std::move(pointB)};
-//     vector<double>* c = new vector<double>[100];
-//     vector<double>* d = new vector<double>[100];
-//
-//     
-//
-//     for (int i = 0; SubtractVectors(b[i], a[i]) < epsilon; ++i)
-//     {
-//         if()
-//     }
-//
-//
-// }
+double GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon, int nMax)
+{
+    double alfa = (sqrt(5) - 1) / 2;
 
-const double GoldenRatio = 1.61803398874989;
-const double InvGoldenRatio = 0.61803398874989;
+    auto a = new vector<double>[100];
+    auto b = new vector<double>[100] {move(pointB)};
+    auto c = new vector<double>[100];
+    auto d = new vector<double>[100];
 
+    
+
+    for (int i = 0; VectorLength(SubtractVectors(b[i], a[i])) < epsilon; ++i)
+    {
+        //if()
+    }
+
+    return 0;
+}
+
+constexpr double GoldenRatio = 1.61803398874989;
+constexpr double InvGoldenRatio = 0.61803398874989;
 std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vector<double> a, std::vector<double> b, double epsilon, int nMax)
 {
     std::vector<double> d = MultiplyVector(SubtractVectors(b, a), InvGoldenRatio);

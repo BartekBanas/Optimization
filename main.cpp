@@ -191,16 +191,6 @@ matrix function2realistic(matrix K, matrix alfaT, matrix empty)
     y = y * 0.1;
 
     return y;
-
-    // vector<double> result;
-    //
-    // result.push_back(y[0](0, 0));
-    // result.push_back(y[1](50, 1));
-    //
-    // // result.push_back(0);
-    // // result.push_back(0);
-    //
-    // return result;
 }
 
 double Function3(vector<double> x)
@@ -221,17 +211,13 @@ double Fibonacci(double function(double), double a, double b, double precision)
     double* fibonacci = new double[100]{0, 1};
 
     vector<double> x1(5, 5);
-
-
+    
     vector<double> x2;
     x2.push_back(6.0);
     x2.push_back(2);
     PrintVector(x1);
     PrintVector(x2);
-
-    //vector<double> x3 = vektorek.AddVectors(x1, x2);
-
-
+    
     vector<double> x3 = AddVectors(x1, x2);
     PrintVector(x3);
 
