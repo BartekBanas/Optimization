@@ -1,6 +1,7 @@
 ﻿#include "Algorithms.h"
 
 #include <algorithm>
+#include <utility>
 #include <vector>
 #include "VectorUtilities.h"
 #include <cmath>
@@ -117,24 +118,41 @@ vector<double> nelderMead(double objectiveFunction(std::vector<double>), const s
     return simplex[0];
 }
 
-double GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon,
+vector<double> GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon,
                          int nMax)
 {
     double alfa = (sqrt(5) - 1) / 2;
 
     auto a = new vector<double>[100];
-    auto b = new vector<double>[100]{move(pointB)};
+    auto b = new vector<double>[100];
     auto c = new vector<double>[100];
     auto d = new vector<double>[100];
 
     a[0] = vector<double>{0, 0};
+    b[0] = std::move(pointB);
+    c[0] = SubtractVectors(b[0], MultiplyVector(SubtractVectors(b[0], a[0]), alfa));
+    d[0] = AddVectors(a[0], MultiplyVector(SubtractVectors(b[0], a[0]), alfa));
 
-    for (int i = 0; VectorLength(SubtractVectors(b[i], a[i])) < epsilon; ++i)
+    int i;
+    for (i = 0; VectorLength(SubtractVectors(b[i], a[i])) < epsilon; ++i)
     {
-        //if()
+        if (f(c[i]) < f(d[i]))
+        {
+            a[i + 1] = a[i];
+            b[i + 1] = d[i];
+            c[i + 1] = SubtractVectors(b[i + 1], MultiplyVector(SubtractVectors(b[i + 1], a[i + 1]), alfa));
+            d[i + 1] = c[i];
+        }
+        else
+        {
+            a[i + 1] = c[i];
+            b[i + 1] = b[i];
+            c[i + 1] = d[i];
+            d[i + 1] = SubtractVectors(a[i + 1], MultiplyVector(SubtractVectors(b[i + 1], a[i + 1]), alfa));
+        }
     }
 
-    return 0;
+    return MultiplyVector(AddVectors(a[i], b[i]), 0.5);
 }
 
 constexpr double GoldenRatio = 1.61803398874989;

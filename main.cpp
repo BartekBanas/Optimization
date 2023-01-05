@@ -142,6 +142,7 @@ void lab4()
     PrintVector(b);
 
     PrintVector(GoldenSectionSearch(Function4, a, b, 0.001, 1000));
+    PrintVector(GoldenSectionSearch(Function4, a, b, 0.001, 1000));
 }
 
 
