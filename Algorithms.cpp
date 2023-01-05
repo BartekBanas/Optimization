@@ -5,6 +5,7 @@
 #include <vector>
 #include "VectorUtilities.h"
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -133,7 +134,7 @@ vector<double> GoldenRatioMethod(double f(vector<double>), double A, double B, d
     d[0] = AddVectors(a[0], MultiplyVector(SubtractVectors(b[0], a[0]), alfa));
 
     int i;
-    for (i = 0; VectorLength(SubtractVectors(b[i], a[i])) < epsilon; ++i)
+    for (i = 0; VectorLength(SubtractVectors(b[i], a[i])) > epsilon; ++i)
     {
         if (f(c[i]) < f(d[i]))
         {
