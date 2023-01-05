@@ -12,7 +12,7 @@ double Function1(double x);
 double Function2(vector<double> x);
 double funtion2_real(vector<double> x);
 double Function3(vector<double> x);
-
+double Function4(vector<double> x);
 
 double Fibonacci(double function(double), double a, double b, double precision);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
@@ -199,6 +199,12 @@ double Function3(vector<double> x)
     fcalls++;
     return sin(M_PI * sqrt(pow(x[0] / M_PI, 2) + pow(x[1] / M_PI, 2))) /
         M_PI * sqrt(pow(x[0] / M_PI, 2) + pow(x[1] / M_PI, 2));
+}
+
+double Function4(vector<double> x)
+{
+    fcalls++;
+    return pow(x[0] + 2 * x[1] - 7 ,2) + pow(2 * x[0] + x[1] - 5, 2);
 }
 
 double Fibonacci(double function(double), double a, double b, double precision)

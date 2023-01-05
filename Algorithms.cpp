@@ -3,8 +3,12 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include <list>
+#include <utility>
 #include <vector>
 #include "VectorUtilities.h"
+
+using std::vector;
 
 std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint, double alpha, double gamma, double rho,
                                double sigma, int maxIterations) 
@@ -113,17 +117,57 @@ std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), co
     return simplex[0];
 }
 
-double GoldenRatioMethod(double pointA, double pointB, double epsilon)
+// double GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon, int nMax)
+// {
+//     double alfa = (sqrt(5) - 1) / 2;
+//
+//     vector<double>* a = new vector<double>[100] (2, 0.0);
+//     vector<double>* b = new vector<double>[100] {std::move(pointB)};
+//     vector<double>* c = new vector<double>[100];
+//     vector<double>* d = new vector<double>[100];
+//
+//     
+//
+//     for (int i = 0; SubtractVectors(b[i], a[i]) < epsilon; ++i)
+//     {
+//         if()
+//     }
+//
+//
+// }
+
+const double GoldenRatio = 1.61803398874989;
+const double InvGoldenRatio = 0.61803398874989;
+
+double GoldenSectionSearch(double f(vector<double>), std::vector<double> a, std::vector<double> b, double epsilon)
 {
-    double alfa = (sqrt(5) - 1) / 2;
+    std::vector<double> d = MultiplyVector(SubtractVectors(b, a), InvGoldenRatio);
+    std::vector<double> c = AddVectors(a, d);
+    double fc = f(c);
+    std::vector<double> e = MultiplyVector(SubtractVectors(b, a), GoldenRatio);
+    double fd = f(AddVectors(a, e));
 
-    double* a = new double[100] {0};
-    double* b = new double[100] {pointB};
-    double* c = new double[100];
-    double* d = new double[100];
-
-    for (int i = 0; b[i] - a[i] < epsilon; ++i)
+    while (VectorLength(SubtractVectors(b, a)) > epsilon)
     {
-        
+        if (fc < fd)
+        {
+            b = AddVectors(a, e);
+            e = d;
+            d = MultiplyVector(SubtractVectors(b, a), InvGoldenRatio);
+            fd = fc;
+            c = AddVectors(a, d);
+            fc = f(c);
+        }
+        else
+        {
+            a = c;
+            c = AddVectors(a, e);
+            e = d;
+            d = MultiplyVector(SubtractVectors(b, a), InvGoldenRatio);
+            fc = fd;
+            fd = f(AddVectors(a, e));
+        }
     }
+
+    return VectorLength(AddVectors(a, b)) / 2.0;
 }
