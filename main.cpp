@@ -45,7 +45,7 @@ int main()
         //lab1();
         //lab2();
         //lab3();
-        //lab4();
+        lab4();
     }
     catch (string EX_INFO)
     {
@@ -109,6 +109,7 @@ void lab2()
     }
 }
 
+
 void lab3()
 {
     vector<double> x = {1, 0.75};
@@ -128,8 +129,8 @@ void lab3()
     result = NelderMeadMethod(x, step, alfa, beta, gamma, delta, epsilon, Nmax);
     PrintVector(result);
     
-    // result = nelderMead(Function3 ,result, alfa, gamma, delta, epsilon, Nmax);
-    // PrintVector(result);
+    result = nelderMead(Function3 ,result, alfa, gamma, delta, epsilon, Nmax);
+    PrintVector(result);
 }
 
 void lab4()
@@ -140,8 +141,9 @@ void lab4()
     PrintVector(a);
     PrintVector(b);
 
-    //PrintVector(GoldenSectionSearch(Function4, a, b, 0.001, 1000));
+    PrintVector(GoldenSectionSearch(Function4, a, b, 0.001, 1000));
 }
+
 
 void lab5()
 {
