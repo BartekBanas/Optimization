@@ -135,8 +135,8 @@ void lab3()
 
 void lab4()
 {
-    std::vector<double> a = {0, 0};
-    std::vector<double> b = {10, 10};
+    vector<double> a = {0, 0};
+    vector<double> b = {10, 10};
     
     PrintVector(a);
     PrintVector(b);

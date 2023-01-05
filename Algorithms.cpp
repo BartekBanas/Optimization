@@ -8,8 +8,10 @@
 using namespace std;
 
 ;
-vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint, double alpha, double gamma, double rho,
-                               double sigma, int maxIterations) 
+
+vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint,
+                          double alpha, double gamma, double rho,
+                          double sigma, int maxIterations)
 {
     // Inicjalizujemy sympleks jako tablicę wektorów
     std::vector<std::vector<double>> simplex;
@@ -115,16 +117,17 @@ vector<double> nelderMead(double objectiveFunction(std::vector<double>), const s
     return simplex[0];
 }
 
-double GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon, int nMax)
+double GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon,
+                         int nMax)
 {
     double alfa = (sqrt(5) - 1) / 2;
 
     auto a = new vector<double>[100];
-    auto b = new vector<double>[100] {move(pointB)};
+    auto b = new vector<double>[100]{move(pointB)};
     auto c = new vector<double>[100];
     auto d = new vector<double>[100];
 
-    
+    a[0] = vector<double>{0, 0};
 
     for (int i = 0; VectorLength(SubtractVectors(b[i], a[i])) < epsilon; ++i)
     {
@@ -136,7 +139,9 @@ double GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector
 
 constexpr double GoldenRatio = 1.61803398874989;
 constexpr double InvGoldenRatio = 0.61803398874989;
-std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vector<double> a, std::vector<double> b, double epsilon, int nMax)
+
+std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vector<double> a, std::vector<double> b,
+                                        double epsilon, int nMax)
 {
     std::vector<double> d = MultiplyVector(SubtractVectors(b, a), InvGoldenRatio);
     std::vector<double> c = AddVectors(a, d);
