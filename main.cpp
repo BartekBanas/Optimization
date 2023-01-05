@@ -142,7 +142,10 @@ void lab4()
     PrintVector(b);
 
     PrintVector(GoldenSectionSearch(Function4, a, b, 0.001, 1000));
+    cout << "fcalls: " << fcalls << endl;
+    fcalls = 0;
     PrintVector(GoldenRatioMethod(Function4, 0, 10, 0.001, 1000));
+    cout << "fcalls: " << fcalls << endl;
 }
 
 
