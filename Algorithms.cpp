@@ -1,15 +1,10 @@
 ﻿#include "Algorithms.h"
 
-#include <iostream>
-#include <cmath>
 #include <algorithm>
-#include <list>
-#include <utility>
 #include <vector>
 #include "VectorUtilities.h"
 
-using std::vector;
-
+;
 std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint, double alpha, double gamma, double rho,
                                double sigma, int maxIterations) 
 {
@@ -139,7 +134,7 @@ std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), co
 const double GoldenRatio = 1.61803398874989;
 const double InvGoldenRatio = 0.61803398874989;
 
-vector<double> GoldenSectionSearch(double f(vector<double>), std::vector<double> a, std::vector<double> b, double epsilon, int nMax)
+std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vector<double> a, std::vector<double> b, double epsilon, int nMax)
 {
     std::vector<double> d = MultiplyVector(SubtractVectors(b, a), InvGoldenRatio);
     std::vector<double> c = AddVectors(a, d);
