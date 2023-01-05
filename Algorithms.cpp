@@ -139,7 +139,7 @@ std::vector<double> nelderMead(double objectiveFunction(std::vector<double>), co
 const double GoldenRatio = 1.61803398874989;
 const double InvGoldenRatio = 0.61803398874989;
 
-double GoldenSectionSearch(double f(vector<double>), std::vector<double> a, std::vector<double> b, double epsilon)
+vector<double> GoldenSectionSearch(double f(vector<double>), std::vector<double> a, std::vector<double> b, double epsilon, int nMax)
 {
     std::vector<double> d = MultiplyVector(SubtractVectors(b, a), InvGoldenRatio);
     std::vector<double> c = AddVectors(a, d);
@@ -169,5 +169,5 @@ double GoldenSectionSearch(double f(vector<double>), std::vector<double> a, std:
         }
     }
 
-    return VectorLength(AddVectors(a, b)) / 2.0;
+    return MultiplyVector(AddVectors(a, b), 0.5);
 }
