@@ -118,8 +118,7 @@ vector<double> nelderMead(double objectiveFunction(std::vector<double>), const s
     return simplex[0];
 }
 
-vector<double> GoldenRatioMethod(double f(vector<double>), vector<double> pointA, vector<double> pointB, double epsilon,
-                         int nMax)
+vector<double> GoldenRatioMethod(double f(vector<double>), double A, double B, double epsilon, int nMax)
 {
     double alfa = (sqrt(5) - 1) / 2;
 
@@ -129,7 +128,7 @@ vector<double> GoldenRatioMethod(double f(vector<double>), vector<double> pointA
     auto d = new vector<double>[100];
 
     a[0] = vector<double>{0, 0};
-    b[0] = std::move(pointB);
+    b[0] = vector<double>{A, B};
     c[0] = SubtractVectors(b[0], MultiplyVector(SubtractVectors(b[0], a[0]), alfa));
     d[0] = AddVectors(a[0], MultiplyVector(SubtractVectors(b[0], a[0]), alfa));
 
