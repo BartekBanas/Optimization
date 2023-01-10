@@ -13,6 +13,8 @@ double Function2(vector<double> x);
 double funtion2_real(vector<double> x);
 double Function3(vector<double> x);
 double Function4(vector<double> x);
+double Function51(vector<double> x, double a);
+double Function52(vector<double> x, double a);
 
 double Fibonacci(double function(double), double a, double b, double precision);
 double lagrange(double aInput, double bInput, double eps, double gamma, int Nmax);
@@ -208,6 +210,16 @@ double Function4(vector<double> x)
 {
     fcalls++;
     return pow(x[0] + 2 * x[1] - 7 ,2) + pow(2 * x[0] + x[1] - 5, 2);
+}
+
+double Function51(vector<double> x, double a)
+{
+    return (pow(x[0] - 2, 2) + pow(x[1] - 2, 2)) * a;
+}
+
+double Function52(vector<double> x, double a)
+{
+    return (pow(x[0] - 2, 2) + pow(x[1] - 2, 2)) / a;
 }
 
 double Fibonacci(double function(double), double a, double b, double precision)
