@@ -191,3 +191,12 @@ std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vect
 
     return MultiplyVector(AddVectors(a, b), 0.5);
 }
+
+vector<double> PowellMethod(double f(vector<double>), vector<double> X, double epsilon, int nMax)
+{
+    int i = 0;
+    double* d = new double[nMax];
+    double* p = new double[nMax];
+    double* h = new double[nMax];
+    double* x = new double[nMax];
+}
