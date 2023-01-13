@@ -219,7 +219,7 @@ vector<double> PowellMethod(double f(vector<double>), vector<double> X, double e
     return X;
 }
 
-vector<double> Newton(double f(vector<double>), vector<double> x0, double epsilon, double alpha, int* fcalls)
+vector<double> Newton(double f(vector<double>), vector<double> x0, double epsilon, double alpha)
 {
     int n = 2;
     
