@@ -156,6 +156,15 @@ vector<double> GoldenRatioMethod(double f(vector<double>), double A, double B, d
 constexpr double GoldenRatio = 1.61803398874989;
 constexpr double InvGoldenRatio = 0.61803398874989;
 
+vector<double> GradientMethod(vector<double> x0, double epsilon)
+{
+
+    double h = 0.5;
+
+    
+    
+}
+
 std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vector<double> a, std::vector<double> b,
                                         double epsilon, int nMax)
 {
