@@ -5,6 +5,7 @@
 #include <vector>
 #include "VectorUtilities.h"
 #include <cmath>
+#include <complex.h>
 #include <iostream>
 
 using namespace std;
@@ -216,4 +217,38 @@ vector<double> PowellMethod(double f(vector<double>), vector<double> X, double e
     double* x = new double[nMax];
 
     return X;
+}
+
+vector<double> Newton(double f(vector<double>), vector<double> x0, double epsilon, double alpha, int* fcalls)
+{
+    int n = 2;
+    
+    while (true)
+        {
+        vector<double> grad(n);
+        for (int i = 0; i < n; i++) {
+            vector<double> x_perturbed = x0;
+            x_perturbed[i] += epsilon;
+            grad[i] = (f(x_perturbed) - f(x0)) / epsilon;
+        }
+        PrintVector(grad);
+
+        vector<vector<double>> hessian(n, vector<double>(n));
+        int i = 0;
+        for (i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                vector<double> x_perturbed = x0;
+                x_perturbed[i] += epsilon;
+                x_perturbed[j] += epsilon;
+                hessian[i][j] = (f(x_perturbed) - f(x0) - grad[i] * epsilon - grad[j] * epsilon) / (epsilon * epsilon);
+            }
+        }
+        
+        vector<double> x1 = SubtractVectors(x0, MultiplyVector(AddVectors(hessian[i], grad), alpha));
+        
+        if (VectorLength(SubtractVectors(x1, x0)) < epsilon) {
+            return x1;
+        }
+        x0 = x1;
+    }
 }
