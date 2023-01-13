@@ -112,7 +112,6 @@ void lab2()
     }
 }
 
-
 void lab3()
 {
     vector<double> x = {1, 0.75};
@@ -139,7 +138,7 @@ void lab3()
 void lab4()
 {
     vector<double> a = {0, 0};
-    vector<double> b = {10, 10};
+    vector<double> b = {-10, -10};
     
     PrintVector(a);
     PrintVector(b);
@@ -150,7 +149,6 @@ void lab4()
     PrintVector(GoldenRatioMethod(Function4, 0, 10, 0.001, 1000));
     cout << "fcalls: " << fcalls << endl;
 }
-
 
 void lab5()
 {

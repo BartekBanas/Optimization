@@ -10,8 +10,7 @@
 using namespace std;
 
 vector<double> nelderMead(double objectiveFunction(std::vector<double>), const std::vector<double>& initialPoint,
-                          double alpha, double gamma, double rho,
-                          double sigma, int maxIterations)
+                          double alpha, double gamma, double rho, double sigma, int maxIterations)
 {
     // Inicjalizujemy sympleks jako tablicę wektorów
     std::vector<std::vector<double>> simplex;
@@ -156,13 +155,22 @@ vector<double> GoldenRatioMethod(double f(vector<double>), double A, double B, d
 constexpr double GoldenRatio = 1.61803398874989;
 constexpr double InvGoldenRatio = 0.61803398874989;
 
-vector<double> GradientMethod(vector<double> x0, double epsilon)
+vector<double> GradientMethod(vector<double> x0, double epsilon, int* fcalls, int nMax)
 {
+    int i = 0;
+    double d;
+    vector<double> h;
+    auto x = new vector<double>[100];
 
-    double h = 0.5;
-
+    for (int i = 0; VectorLength(SubtractVectors(x[i], x[i-1])) < epsilon || *fcalls > nMax; ++i)
+    {
+        d = VectorLength(x[i]);
+        h = MultiplyVector(vector<double> {1, 1}, x0[0]);
+        
+        x[i+1] = AddVectors(x[i], MultiplyVector(h, d));
+    }
     
-    
+    return x[i];
 }
 
 std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vector<double> a, std::vector<double> b,
