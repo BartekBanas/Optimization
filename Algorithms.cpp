@@ -199,4 +199,6 @@ vector<double> PowellMethod(double f(vector<double>), vector<double> X, double e
     double* p = new double[nMax];
     double* h = new double[nMax];
     double* x = new double[nMax];
+
+    return X;
 }
