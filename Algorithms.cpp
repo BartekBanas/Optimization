@@ -1,7 +1,6 @@
 ﻿#include "Algorithms.h"
 
 #include <algorithm>
-#include <utility>
 #include <vector>
 #include "VectorUtilities.h"
 #include <cmath>
