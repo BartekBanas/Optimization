@@ -253,10 +253,9 @@ vector<double> PowellMethod(double f(vector<double>), double f2(vector<double>),
     vector<vector<double>> p(x0.size() + 1);
     vector<double> x(x0);
     vector<double> h(x0.size());
-
-    // initialize p0
+    
     p[0] = x0;
-    // initialize d0
+    
     for (int i = 0; i < x0.size(); i++)
     {
         d[i].resize(x0.size());
