@@ -163,14 +163,14 @@ vector<double> GradientMethod(vector<double> x0, double epsilon, int* fcalls, in
     vector<double> h;
     auto x = new vector<double>[100];
 
-    for (int i = 0; VectorLength(SubtractVectors(x[i], x[i-1])) < epsilon || *fcalls > nMax; ++i)
+    for (int i = 0; VectorLength(SubtractVectors(x[i], x[i - 1])) < epsilon || *fcalls > nMax; ++i)
     {
         d = VectorLength(x[i]);
-        h = MultiplyVector(vector<double> {1, 1}, x0[0]);
-        
-        x[i+1] = AddVectors(x[i], MultiplyVector(h, d));
+        h = MultiplyVector(vector<double>{1, 1}, x0[0]);
+
+        x[i + 1] = AddVectors(x[i], MultiplyVector(h, d));
     }
-    
+
     return x[i];
 }
 
@@ -208,25 +208,15 @@ std::vector<double> GoldenSectionSearch(double f(std::vector<double>), std::vect
     return MultiplyVector(AddVectors(a, b), 0.5);
 }
 
-vector<double> PowellMethod(double f(vector<double>), vector<double> X, double epsilon, int nMax)
-{
-    int i = 0;
-    double* d = new double[nMax];
-    double* p = new double[nMax];
-    double* h = new double[nMax];
-    double* x = new double[nMax];
-
-    return X;
-}
-
 vector<double> Newton(double f(vector<double>), vector<double> x0, double epsilon, double alpha)
 {
     int n = 2;
-    
+
     while (true)
-        {
+    {
         vector<double> grad(n);
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             vector<double> x_perturbed = x0;
             x_perturbed[i] += epsilon;
             grad[i] = (f(x_perturbed) - f(x0)) / epsilon;
@@ -235,20 +225,74 @@ vector<double> Newton(double f(vector<double>), vector<double> x0, double epsilo
 
         vector<vector<double>> hessian(n, vector<double>(n));
         int i = 0;
-        for (i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
                 vector<double> x_perturbed = x0;
                 x_perturbed[i] += epsilon;
                 x_perturbed[j] += epsilon;
                 hessian[i][j] = (f(x_perturbed) - f(x0) - grad[i] * epsilon - grad[j] * epsilon) / (epsilon * epsilon);
             }
         }
-        
+
         vector<double> x1 = SubtractVectors(x0, MultiplyVector(AddVectors(hessian[i], grad), alpha));
-        
-        if (VectorLength(SubtractVectors(x1, x0)) < epsilon) {
+
+        if (VectorLength(SubtractVectors(x1, x0)) < epsilon)
+        {
             return x1;
         }
         x0 = x1;
     }
+}
+
+vector<double> PowellMethod(double f(vector<double>), double f2(vector<double>), vector<double> x0, double a,
+                            double epsilon, int Nmax)
+{
+    int i = 0;
+    vector<vector<double>> d(x0.size());
+    vector<vector<double>> p(x0.size() + 1);
+    vector<double> x(x0);
+    vector<double> h(x0.size());
+
+    // initialize p0
+    p[0] = x0;
+    // initialize d0
+    for (int i = 0; i < x0.size(); i++)
+    {
+        d[i].resize(x0.size());
+        d[i][i] = 1;
+    }
+
+    while (i < Nmax)
+    {
+        int imax = 0;
+        double fmax = f(MultiplyVector(x, a));
+        for (int j = 0; j < x0.size(); j++)
+        {
+            h = MultiplyVector(d[j], f2(MultiplyVector(x, a)));
+            p[j + 1] = AddVectors(x, h);
+            double fj = f(MultiplyVector(p[j + 1], a));
+            if (fj > fmax)
+            {
+                imax = j;
+                fmax = fj;
+            }
+        }
+        if (fmax - f(MultiplyVector(x, a)) < epsilon)
+        {
+            return x;
+        }
+
+        x = p[imax + 1];
+        d[imax] = SubtractVectors(p[imax + 1], p[0]);
+        for (int j = 0; j < imax; j++)
+        {
+            d[j] = d[j + 1];
+        }
+        h = SubtractVectors(p[imax + 1], p[0]);
+        d[x0.size() - 1] = MultiplyVector(h, 1.0 / VectorLength(h));
+        i++;
+    }
+    return {};
 }
