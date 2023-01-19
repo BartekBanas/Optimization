@@ -156,7 +156,7 @@ void lab5()
     PrintVector(x0);
     PrintVector(b);
 
-    PrintVector(PowellMethod(Function51, Function52, x0, a, 0.001, 1000));
+    (PowellMethod(Function51, Function52, x0, a, 0.001, 1000));
     cout << "fcalls: " << fcalls << endl;
     fcalls = 0;
     // PrintVector(PowellMethod(Function4, 0, 10, 0.001, 1000));
@@ -222,11 +222,13 @@ double Function4(vector<double> x)
 
 double Function51(vector<double> x, double a)
 {
+    fcalls++;
     return (pow(x[0] - 2, 2) + pow(x[1] - 2, 2)) * a;
 }
 
 double Function52(vector<double> x, double a)
 {
+    fcalls++;
     return (pow(x[0] - 2, 2) + pow(x[1] - 2, 2)) / a;
 }
 
