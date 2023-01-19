@@ -292,5 +292,5 @@ vector<double> PowellMethod(double f(vector<double>, double), double f2(vector<d
         d[x0.size() - 1] = MultiplyVector(h, 1.0 / VectorLength(h));
         i++;
     }
-    return {};
+    return x;
 }

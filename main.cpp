@@ -150,13 +150,13 @@ void lab4()
 void lab5()
 {
     vector<double> x0 = {0, 0};
-    vector<double> b = {-10, -10};
-    double a = 1;
+    vector<double> x1 = {-10, -10};
+    double a = 100;
     
     PrintVector(x0);
-    PrintVector(b);
+    PrintVector(x1);
 
-    (PowellMethod(Function51, Function52, x0, a, 0.001, 1000));
+    PrintVector(PowellMethod(Function51, Function52, x1, a, 0.001, 10000));
     cout << "fcalls: " << fcalls << endl;
     fcalls = 0;
     // PrintVector(PowellMethod(Function4, 0, 10, 0.001, 1000));
