@@ -278,16 +278,13 @@ vector<double> PowellMethod(double f(vector<double>, double), double f2(vector<d
             }
         }
         if (fmax - f(x, a) < epsilon)
-        {
             return x;
-        }
 
         x = p[imax + 1];
         d[imax] = SubtractVectors(p[imax + 1], p[0]);
         for (int j = 0; j < imax; j++)
-        {
             d[j] = d[j + 1];
-        }
+        
         h = SubtractVectors(p[imax + 1], p[0]);
         d[x0.size() - 1] = MultiplyVector(h, 1.0 / VectorLength(h));
         i++;
