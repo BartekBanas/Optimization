@@ -45,10 +45,7 @@ int main()
 {
     try
     {
-        //lab1();
-        //lab2();
-        //lab3();
-        lab4();
+        lab5();
     }
     catch (string EX_INFO)
     {
@@ -152,17 +149,18 @@ void lab4()
 
 void lab5()
 {
-    vector<double> a = {0, 0};
+    vector<double> x0 = {0, 0};
     vector<double> b = {-10, -10};
+    double a = 1;
     
-    PrintVector(a);
+    PrintVector(x0);
     PrintVector(b);
 
-    PrintVector(PowellMethod(Function51, Function52, a, 0.5, 0.001, 1000));
+    PrintVector(PowellMethod(Function51, Function52, x0, a, 0.001, 1000));
     cout << "fcalls: " << fcalls << endl;
     fcalls = 0;
-    PrintVector(PowellMethod(Function4, 0, 10, 0.001, 1000));
-    cout << "fcalls: " << fcalls << endl;
+    // PrintVector(PowellMethod(Function4, 0, 10, 0.001, 1000));
+    // cout << "fcalls: " << fcalls << endl;
 }
 
 void lab6()
