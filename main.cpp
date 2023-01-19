@@ -152,6 +152,17 @@ void lab4()
 
 void lab5()
 {
+    vector<double> a = {0, 0};
+    vector<double> b = {-10, -10};
+    
+    PrintVector(a);
+    PrintVector(b);
+
+    PrintVector(PowellMethod(Function51, Function52, a, 0.5, 0.001, 1000));
+    cout << "fcalls: " << fcalls << endl;
+    fcalls = 0;
+    PrintVector(PowellMethod(Function4, 0, 10, 0.001, 1000));
+    cout << "fcalls: " << fcalls << endl;
 }
 
 void lab6()

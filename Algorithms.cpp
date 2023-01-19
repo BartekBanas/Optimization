@@ -4,7 +4,7 @@
 #include <vector>
 #include "VectorUtilities.h"
 #include <cmath>
-#include <complex.h>
+#include <complex>
 #include <iostream>
 
 using namespace std;
@@ -245,17 +245,17 @@ vector<double> Newton(double f(vector<double>), vector<double> x0, double epsilo
     }
 }
 
-vector<double> PowellMethod(double f(vector<double>), double f2(vector<double>), vector<double> x0, double a,
-                            double epsilon, int Nmax)
+vector<double> PowellMethod(double f(vector<double>, double), double f2(vector<double>, double), vector<double> x0,
+                            double a, double epsilon, int Nmax)
 {
     int i = 0;
     vector<vector<double>> d(x0.size());
     vector<vector<double>> p(x0.size() + 1);
     vector<double> x(x0);
     vector<double> h(x0.size());
-    
+
     p[0] = x0;
-    
+
     for (int i = 0; i < x0.size(); i++)
     {
         d[i].resize(x0.size());
@@ -265,19 +265,19 @@ vector<double> PowellMethod(double f(vector<double>), double f2(vector<double>),
     while (i < Nmax)
     {
         int imax = 0;
-        double fmax = f(MultiplyVector(x, a));
+        double fmax = f(x, a);
         for (int j = 0; j < x0.size(); j++)
         {
-            h = MultiplyVector(d[j], f2(MultiplyVector(x, a)));
+            h = MultiplyVector(d[j], f2(x, a));
             p[j + 1] = AddVectors(x, h);
-            double fj = f(MultiplyVector(p[j + 1], a));
+            double fj = f(p[j + 1], a);
             if (fj > fmax)
             {
                 imax = j;
                 fmax = fj;
             }
         }
-        if (fmax - f(MultiplyVector(x, a)) < epsilon)
+        if (fmax - f(x, a) < epsilon)
         {
             return x;
         }
